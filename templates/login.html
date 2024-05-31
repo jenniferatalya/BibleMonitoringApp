@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="icon" href="/static/images/grii-logo.png" type="image/x-icon"/>
+
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css" />
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <!-- BOOTSTRAP -->
+
+    <!-- FONTAWESOME -->
+    <link rel="stylesheet" href="/static/fontawesome/css/all.min.css" />
+    <!-- FONTAWESOME -->
+
+    <!-- SWEETALERT2 -->
+    <link rel="stylesheet" href="/static/sweetalert2/sweetalert2.css" />
+    <script src="/static/sweetalert2/sweetalert2.js"></script>
+    <!-- SWEETALERT2 -->
+
+    <link rel="stylesheet" href="/static/css/styles.css" />
+    <style>
+        .row {
+        --bs-gutter-x: 0;
+        height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    {% if status == False %}
+    <script>
+        Swal.fire({
+        title: "Oops!!!",
+        text: "{{msg}}",
+        icon: "error",
+        });
+    </script>
+    {% endif %}
+    <div class="row d-flex">
+        <div class="col-4 bg-primary-red d-flex align-items-center justify-content-center">
+            <img class="login-logo" src="/static/images/logo-white.png" />
+        </div>
+        <div class="col-8 d-flex justify-content-center align-items-center bg-login">
+            <div class="w-50">
+                <h3 class="text-bold login-title">Log in</h3>
+                <form action="/login" method="POST">
+                    <div class="login-body">
+                        <label for="username">USERNAME</label>
+                        <input required type="text" name="username" id="username" class="form-control input-txt"/>
+                    </div>
+                    <div class="login-body">
+                        <label for="password">PASSWORD</label>
+                        <input required type="password" name="password" id="password" class="form-control input-txt"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary-red w-100 login">
+                        LOGIN
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,751 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="icon" href="/static/images/grii-logo.png" type="image/x-icon"/>
+
+    <script src="/static/jquery/jquery.min.js"></script>
+
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css" />
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- BOOTSTRAP -->
+
+    <!-- DATATABLE -->
+    <link rel="stylesheet" href="/static/datatable/datatable.css" />
+    <script src="/static/datatable/datatable.js"></script>
+    <!-- DATATABLE -->
+
+    <!-- FONTAWESOME -->
+    <link rel="stylesheet" href="/static/fontawesome/css/all.min.css" />
+    <!-- FONTAWESOME -->
+
+    <!-- SWEETALERT2 -->
+    <link rel="stylesheet" href="/static/sweetalert2/sweetalert2.css" />
+    <script src="/static/sweetalert2/sweetalert2.js"></script>
+    <!-- SWEETALERT2 -->
+
+    <link rel="stylesheet" href="/static/css/sidebar.css" />
+    <link rel="stylesheet" href="../static/css/styles.css" />
+    <script src="/static/js/chart.js"></script>
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="row d-flex justify-content-between align-items-center header">
+        <div class="col">
+        <img src="/static/images/logo.png" class="logo w-25" alt="" />
+        </div>
+        <div class="col hello-sign">
+        <h1 class="admin-name">Hi, {{name}}!</h1>
+        </div>
+    </div>
+    <!-- HEADER -->
+
+    <div id="wrapper" class="wrapper-content all-content">
+        <!-- NAVBAR -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-menu active-menu">
+                    <a href="/" style=" display: flex; align-items: center; color: #800507 !important;">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-chart-line fa-lg"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span>Dashboard</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/report" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-regular fa-file-lines fa-xl"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important" >
+                            <span class="menu-color">Report</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/devotion" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-book-bible fa-lg"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span class="menu-color">Devotion</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/member" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-user fa-lg"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span class="menu-color">Member</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/group" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span class="menu-color">Group</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/church" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-church"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span class="menu-color">Church</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/admin" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-lock fa-lg"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span class="menu-color">Admin</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/logout" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-right-from-bracket fa-lg"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span class="menu-color">Logout</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- NAVBAR -->
+
+        <!-- LOADING -->
+        <section id="loading">
+            <div class="d-flex justify-content-between align-items-center">
+                <img src="/static/images/loading.gif">
+            </div>
+        </section>
+        <!-- LOADING -->
+
+        <!-- CONTENT -->
+        <section id="content">
+            <div id="page-content-wrapper" class="bg-content">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <div class="navbar-header nv-header">
+                            <button class="btn-menu btn btn-toggle-menu btn-sidebar" type="button">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <i class="fa-solid fa-bars"></i>
+                                    </div>
+                                    <div class="col-10">
+                                        <div class="nav-header">Home / Dashboard</div>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="title-page">Dashboard</h1>
+                            <select name="id_group" id="id_group" class="form-select" onchange="loadGraphbyGroup()"></select>
+                            <div class="row">
+                                <div class="col graph-bg">
+                                    <div class="row card-header">
+                                        <div class="col-10">
+                                            <p class="graph-title">JADWAL HARI INI</p><br><br>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="d-flex justify-content-center rounded-box" style="background-color: #128ce2 ;">
+                                                <center><i class="fa-solid fa-calendar-days" style="color: #ffffff;"></i></center>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-content">
+                                        <center>
+                                            <h1 id="schedule-card" class="card-text" style="font-size: 20px; font-weight: bold; line-height: 30px;"></h1>
+                                            <h1 id="schedule-card-date" class="card-text" style="font-size: 20px; font-weight: 200;"></h1>
+                                        </center>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="col graph-bg">
+                                    <div class="row card-header">
+                                        <div class="col-10">
+                                            <p class="graph-title">JUMLAH ANGGOTA KELOMPOK</p><br><br>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="d-flex justify-content-center rounded-box" style="background-color: #e32221 ;">
+                                                <center><i class="fa-solid fa-user-group" style="color: #ffffff;"></i></center>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-content">
+                                        <center>
+                                            <h1 id="number-of-members-card" class="card-text" style="font-weight: bold; font-size: 25px;"></h1>
+                                            <h2 style="font-weight: lighter; font-size: 20px;"> member(s) </h2>
+                                        </center>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="col graph-bg">
+                                    <div class="row card-header">
+                                        <div class="col-10">
+                                            <p class="graph-title">PROGRESS PEMBACAAN KELOMPOK</p>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="d-flex justify-content-center rounded-box" style="background-color: #ffd538 ;">
+                                                <center><i class="fa-solid fa-bars-progress" style="color: #ffffff;"></i></center>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="progressChart" class="donut-size" style="box-sizing: border-box;">
+                                        <div class="pie-wrapper" style="box-sizing: border-box;">
+                                            <span class="label" style="box-sizing: border-box;">
+                                                <span class="num" style="box-sizing: border-box;">0</span><span class="smaller">%</span>
+                                            </span>
+                                            <div class="pie" style="box-sizing: border-box;">
+                                                <div class="left-side half-circle" style="box-sizing: border-box;"></div>
+                                                <div class="right-side half-circle" style="box-sizing: border-box;"></div>
+                                            </div>
+                                            <div class="shadow" style="box-sizing: border-box;"></div>
+                                        </div>
+                                    </div>
+                                    <!-- <canvas id="piechart-progress"></canvas> -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col graph-bg">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p class="graph-title" style="margin:3px !important;">JUMLAH ANGGOTA MELAPOR DALAM SEMINGGU TERAKHIR</p>
+                                        </div>
+                                        <div class="col d-flex justify-content-end">
+                                            <button class="graph-btn" id="weekly-btn" style="background-color: #dbdbdb;" onclick="loadWeekly()">WEEK</button><button class="graph-btn" id="monthly-btn" style="background-color: #ececec;" onclick="loadMonthly()">MONTH</button><button class="graph-btn" id="lifetime-btn" style="background-color: #ececec;" onclick="loadLifetime()">ALL TIME</button>
+                                        </div>
+                                    </div>
+                                    <canvas id="line-graph"></canvas>
+                                </div>
+                            </div>
+            
+                            <div class="row">
+                                <div class="col graph-bg">
+                                    <p class="graph-title">SEGMENTASI ANGGOTA BERDASARKAN LAPORAN</p>
+                                    <canvas id="piechart-members"></canvas>
+                                </div>
+                                <div class="col graph-bg">
+                                    <p class="graph-title">ANGGOTA YANG SUDAH LEBIH DARI 7 HARI TIDAK MELAPOR</p>
+                                    <table id="late-members-card" class="table tbl-dashboard">
+                                        <thead>
+                                            <tr>
+                                            <td>Name</td>
+                                            <td>Last Chapter Reported</td>
+                                            <td>Phone Number</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="list-members"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        $(function () {
+            $(".btn-toggle-menu").click(function () {
+                $("#wrapper").toggleClass("toggled");
+            });
+        });
+
+        const TABLE = $("#late-members-card").DataTable({
+            language: {
+                search: "",
+                searchPlaceholder: "Search",
+            },
+            'columns': [
+                {'width': '50%'},
+                null,
+                null
+            ]
+        });
+
+        var CHART;
+        var CHART2;
+        function loadData() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('content').style.display = 'none';
+            TABLE.clear().draw();
+            $.ajax({
+                // url: "/graphs",
+                url: `/graphs?id_group=${$("#id_group").val()}`,
+                method: "GET",
+                success: function (response) {
+                    if (response.status) {
+                        let headers = [];
+                        let DATA = [];
+
+                        // LINE-GRAPH: NUMBER OF MEMBERS IN A CERTAIN GROUP WHO HAS REPORTESD IN THE LAST 7 DAYS
+                        response.data.graph.forEach(element => {
+                            headers.push(element.report_date);
+                            DATA.push(element.num_members);
+                        })
+                        var ctx = document.getElementById('line-graph').getContext('2d');
+
+                        var chartConfig = {
+                            type: 'line',
+                            data: {
+                                labels: headers,
+                                datasets: [
+                                    {
+                                        label: 'Number of Member(s)',
+                                        data: DATA,
+                                        borderColor: '#80050770',
+                                        borderWidth: 3
+                                    }
+                                ]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                },
+                                height: 50
+                            }
+                        };
+                        // LINE-GRAPH: NUMBER OF MEMBERS IN A CERTAIN GROUP WHO HAS REPORTESD IN THE LAST 7 DAYS
+
+                        // TODAY'S SCHEDULE
+                        
+                        response.data.today_schedule.forEach(element => {
+                            document.getElementById("schedule-card-date").innerHTML = element.date;
+                            document.getElementById("schedule-card").innerHTML = element.readings;
+                        })
+                        // TODAY'S SCHEDULE
+
+                        // NUMBER OF MEMBERS
+                        response.data.number_of_members.forEach(element => {
+                            document.getElementById("number-of-members-card").innerHTML = element.number_of_members;
+                        })
+                        // NUMBER OF MEMBERS
+
+                        // MEMBERS SEGMENTATION
+                        var ctx2 = document.getElementById('piechart-members').getContext('2d');
+                        const pieConfig = {
+                            type: 'doughnut',
+                            data: {
+                                labels: [
+                                    'Ahead',
+                                    'On time',
+                                    '7 days late',
+                                    '30 days late',
+                                    'more than 30 days late',
+                                ],
+                                datasets: [{
+                                    label: 'Number of Members',
+                                    data:[
+                                        response.data.segmentation['ahead'],
+                                        response.data.segmentation['ontime'], 
+                                        response.data.segmentation['7_days'],
+                                        response.data.segmentation['1_month'], 
+                                        response.data.segmentation['more_than_1month']
+                                        // 1, 1,1,1,1
+                                        ],
+                                    backgroundColor: [
+                                    'rgb(38, 198, 218)',
+                                    'rgb(139, 195, 74)',
+                                    'rgb(251, 192, 45)',
+                                    'rgb(255, 152, 0)',
+                                    'rgb(216, 67, 21)'
+                                    ],
+                                    hoverOffset: 4
+                                }]
+                            },
+                        };
+                        // MEMBERS SEGMENTATION
+
+                        // LIST OF MEMBERS WHO HAS NOT REPORTED FOR MORE THAN 7 DAYS
+                        // response.data.list_of_members.forEach(element => {
+                        //     document.getElementById('list-members').innerHTML = ``
+                        //     let code = `<tr>
+                        //                 <td>${element.member_name}</td>
+                        //                 <td>${element.chapter_name} </td>
+                        //                 <td>${element.phone}</td>
+                        //                 </tr>`
+                        //     document.getElementById('list-members').innerHTML += code
+                        // })
+                        var data = []
+                        response.data.list_of_members.forEach(function (element, index) {
+                            let row = [];
+                            row.push(element.member_name);
+                            row.push(element.chapter_name);
+                            row.push(element.phone);
+                            data.push(row);
+                        });
+                        TABLE.rows.add(data).draw();
+                        // LIST OF MEMBERS WHO HAS NOT REPORTED FOR MORE THAN 7 DAYS
+
+                        //GROUP READING PERCENTAGE
+                        updateDonutChart('#progressChart', response.data.group_reading_percentage, true);
+                        //GROUP READING PERCENTAGE
+               
+                        loadGraphbyGroup();
+
+                        CHART = new Chart(ctx, chartConfig);
+                        CHART2 = new Chart(ctx2, pieConfig);
+
+                        document.getElementById("weekly-btn").style.background='#dbdbdb';
+                        document.getElementById("monthly-btn").style.background='#ececec';
+                        document.getElementById("lifetime-btn").style.background='#ececec';
+                         
+                    } else {
+                        Swal.fire({
+                            title: "Oops!!!",
+                            text: response.msg,
+                            icon: "error", 
+                        })
+                    }
+                },
+            });
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+        }
+
+        function loadGroup() {
+            $.ajax({
+                url: `/load-data-group`,
+                method: "GET",
+                success: function (response) {
+                    console.log(response)
+                    if (response.status) {
+                        var data = [];
+                        response.data.forEach(function (element, index) {
+                            let option = document.createElement("option");
+                            if (element.group_name != 'anonymous') {
+                                option.text = element.group_name;
+                                option.value = element.id_group;
+                                $("#id_group").append(option);
+                            }
+                        });
+                    }
+                    loadData();
+                },
+            });
+        }
+
+        function loadGraphbyGroup() {
+            TABLE.clear().draw();
+            $.ajax({
+                url: `/graphs?id_group=${$("#id_group").val()}`,
+                method: "GET",
+                success: function (response) {
+                    if (response.status) {
+                        // LINE-GRAPH: NUMBER OF MEMBERS IN A CERTAIN GROUP WHO HAS REPORTESD IN THE LAST 7 DAYS
+                        let headers = [];
+                        let DATA = [];
+                        response.data.graph.forEach(element => {
+                            headers.push(element.report_date);
+                            DATA.push(element.num_members);
+                        })
+
+                        var newData = {
+                        labels: headers,
+                        datasets: [
+                                {
+                                    label: 'Number of Member(s)',
+                                    data: DATA,
+                                    borderColor: '#80050770',
+                                    borderWidth: 3
+                                }
+                                ],
+                                options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                },
+                                height: 50
+                            }
+                        }
+                        CHART.data = newData
+                        CHART.update();
+                        // LINE-GRAPH: NUMBER OF MEMBERS IN A CERTAIN GROUP WHO HAS REPORTESD IN THE LAST 7 DAYS
+
+                        // TODAY'S SCHEDULE
+                        document.getElementById("schedule-card-date").innerHTML = ``;
+                        document.getElementById("schedule-card").innerHTML = ``;
+
+                        response.data.today_schedule.forEach(element => {
+                        document.getElementById("schedule-card-date").innerHTML = element.date;
+                        document.getElementById("schedule-card").innerHTML = element.readings;
+                        })
+                        // TODAY'S SCHEDULE
+
+                        // NUMBER OF MEMBERS
+                        document.getElementById("number-of-members-card").innerHTML = ``;
+                        response.data.number_of_members.forEach(element => {
+                            document.getElementById("number-of-members-card").innerHTML = element.number_of_members;
+                        })
+                        // NUMBER OF MEMBERS
+
+                        //GROUP READING PERCENTAGE
+                        updateDonutChart('#progressChart', 0, true);
+                        updateDonutChart('#progressChart', response.data.reading_percentage, true);
+                        //GROUP READING PERCENTAGE
+
+                        // MEMBERS SEGMENTATION
+                        var newPieData = {
+                            labels: [
+                                'On time',
+                                'up to 7 days late',
+                                'up to 30 days late',
+                                'more than 30 days late',
+                            ],
+                            datasets: [{
+                                label: 'Number of Members',
+                                data:[
+                                    response.data.segmentation['ontime'], 
+                                    response.data.segmentation['7_days'],
+                                    response.data.segmentation['1_month'], 
+                                    response.data.segmentation['more_than_1month']
+                                    ],
+                                backgroundColor: [
+                                'rgb(139, 195, 74)',
+                                'rgb(251, 192, 45)',
+                                'rgb(255, 152, 0)',
+                                'rgb(216, 67, 21)'
+                                ],
+                                hoverOffset: 4
+                            }]
+                        };
+                        CHART2.data = newPieData
+                        CHART2.update();
+                        // MEMBERS SEGMENTATION
+
+                        // LIST OF MEMBERS WHO HAS NOT REPORTED FOR MORE THAN 7 DAYS
+                        // document.getElementById('list-members').innerHTML = ``
+                        // response.data.list_of_members.forEach(element => {
+                        //     let code = `<tr>
+                        //                 <td>${element.member_name}</td>
+                        //                 <td>${element.chapter_name}</td>
+                        //                 <td>${element.phone}</td>
+                        //                 </tr>`
+                        //     document.getElementById('list-members').innerHTML += code
+                        // })
+
+                        var data = []
+                        response.data.list_of_members.forEach(function (element, index) {
+                            let row = [];
+                            row.push(element.member_name);
+                            row.push(element.chapter_name);
+                            row.push(element.phone);
+                            data.push(row);
+                        });
+                        TABLE.rows.add(data).draw();
+                        // LIST OF MEMBERS WHO HAS NOT REPORTED FOR MORE THAN 7 DAYS
+
+                        document.getElementById("weekly-btn").style.background='#dbdbdb';
+                        document.getElementById("monthly-btn").style.background='#ececec';
+                        document.getElementById("lifetime-btn").style.background='#ececec';
+                    } else {
+                        Swal.fire({
+                            title: "Oops!!!",
+                            text: response.msg,
+                            icon: "error", 
+                        })
+                    }
+                },
+            });
+        }
+
+        function updateDonutChart (el, percent, donut) {
+            percent = Math.round(percent);
+            if (percent > 100) {
+                percent = 100;
+            } else if (percent < 0) {
+                percent = 0;
+            }
+            var deg = Math.round(360 * (percent / 100));
+
+            if (percent > 50) {
+                $(el + ' .pie').css('clip', 'rect(auto, auto, auto, auto)');
+                $(el + ' .right-side').css('transform', 'rotate(180deg)');
+            } else {
+                $(el + ' .pie').css('clip', 'rect(0, 1em, 1em, 0.5em)');
+                $(el + ' .right-side').css('transform', 'rotate(0deg)');
+            }
+            if (donut) {
+                $(el + ' .right-side').css('border-width', '0.1em');
+                $(el + ' .left-side').css('border-width', '0.1em');
+                $(el + ' .shadow').css('border-width', '0.1em');
+            } else {
+                $(el + ' .right-side').css('border-width', '0.5em');
+                $(el + ' .left-side').css('border-width', '0.5em');
+                $(el + ' .shadow').css('border-width', '0.5em');
+            }
+            $(el + ' .num').text(percent);
+            $(el + ' .left-side').css('transform', 'rotate(' + deg + 'deg)');
+        }
+
+        // Pass in a number for the percent
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function loadWeekly(){
+            $.ajax({
+                url: `/weekly-graph?id_group=${$("#id_group").val()}`,
+                method: "GET",
+                success: function (response) {
+                    let headers = [];
+                    let DATA = [];
+                    response.data.forEach(element => {
+                        headers.push(element.report_date);
+                        DATA.push(element.num_members);
+                    })
+
+                    var newData = {
+                    labels: headers,
+                    datasets: [
+                            {
+                                label: 'Number of Member(s)',
+                                data: DATA,
+                                borderColor: '#80050770',
+                                borderWidth: 3
+                            }
+                            ],
+                            options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            },
+                            height: 50
+                        }
+                    }
+                    CHART.data = newData
+                    CHART.update();
+
+                    document.getElementById("weekly-btn").style.background='#dbdbdb';
+                    document.getElementById("monthly-btn").style.background='#ececec';
+                    document.getElementById("lifetime-btn").style.background='#ececec';
+                }
+            })
+        }
+
+        function loadMonthly() {
+            $.ajax({
+                url: `/monthly-graph?id_group=${$("#id_group").val()}`,
+                method: "GET",
+                success: function (response) {
+                    let headers = [];
+                    let DATA = [];
+                    response.data.forEach(element => {
+                        headers.push(element.report_date);
+                        DATA.push(element.num_members);
+                    })
+
+                    var newData = {
+                    labels: headers,
+                    datasets: [
+                            {
+                                label: 'Number of Member(s)',
+                                data: DATA,
+                                borderColor: '#80050770' ,
+                                borderWidth: 3
+                            }
+                            ],
+                            options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            },
+                            height: 50
+                        }
+                    }
+                    CHART.data = newData
+                    CHART.update();
+                    
+                    document.getElementById("weekly-btn").style.background='#ececec';
+                    document.getElementById("monthly-btn").style.background='#dbdbdb';
+                    document.getElementById("lifetime-btn").style.background='#ececec';
+                }
+            })  
+        }
+
+        function loadLifetime() {
+            $.ajax({
+                url: `/lifetime-graph?id_group=${$("#id_group").val()}`,
+                method: "GET",
+                success: function (response) {
+                    let headers = [];
+                    let DATA = [];
+                    response.data.forEach(element => {
+                        headers.push(element.report_date);
+                        DATA.push(element.num_members);
+                    })
+
+                    var newData = {
+                    labels: headers,
+                    datasets: [
+                            {
+                                label: 'Number of Member(s)',
+                                data: DATA,
+                                borderColor: '#80050770',
+                                borderWidth: 3
+                            }
+                            ],
+                            options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            },
+                            height: 50
+                        }
+                    }
+                    CHART.data = newData
+                    CHART.update();
+                    
+                    document.getElementById("weekly-btn").style.background='#ececec';
+                    document.getElementById("monthly-btn").style.background='#ececec';
+                    document.getElementById("lifetime-btn").style.background='#dbdbdb';
+                }
+            })  
+        }
+
+        loadGroup();
+    </script>
+</body>
+</html>

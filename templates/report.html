@@ -1,0 +1,1295 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Report Details</title>
+    <link rel="icon" href="/static/images/grii-logo.png" type="image/x-icon"/>
+    
+    <script src="/static/jquery/jquery.min.js"></script>
+
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css" />
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- BOOTSTRAP -->
+
+    <!-- FONTAWESOME -->
+    <link rel="stylesheet" href="/static/fontawesome/css/all.min.css" />
+    <!-- FONTAWESOME -->
+
+    <!-- DATATABLE -->
+    <link rel="stylesheet" href="/static/datatable/datatable.css" />
+    <script src="/static/datatable/datatable.js"></script>
+    <!-- DATATABLE -->
+
+    <!-- SWEETALERT2 -->
+    <link rel="stylesheet" href="/static/sweetalert2/sweetalert2.css" />
+    <script src="/static/sweetalert2/sweetalert2.js"></script>
+    <!-- SWEETALERT2 -->
+
+    <!-- TOASTR -->
+    <script src="/static/toastr/toastr.min.js"></script>
+    <link rel="stylesheet" href="/static/toastr/toastr.min.css" />
+    <!-- TOASTR -->
+
+    <script src="/static/js/main.js"></script>
+
+    <link rel="stylesheet" href="/static/css/sidebar.css" />
+    <link rel="stylesheet" href="../static/css/styles.css" />
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="row d-flex justify-content-between align-items-center header">
+        <div class="col">
+            <img src="/static/images/logo.png" class="logo w-25" alt="" />
+        </div>
+        <div class="col hello-sign">
+            <h1 class="admin-name">Hi, {{name}}!</h1>
+        </div>
+    </div>
+    <!-- HEADER -->
+
+    <!-- NAVBAR -->
+    <div id="wrapper" class="wrapper-content all-content">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-menu">
+                    <a href="/" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-chart-line fa-lg"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important" >
+                            <span class="menu-color">Dashboard</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu active-menu">
+                    <a href="/report" style="display: flex; align-items: center; color: #800507 !important;">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-regular fa-file-lines fa-xl"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span>Report</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/devotion" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-book-bible fa-lg"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important" >
+                            <span class="menu-color">Devotion</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/member" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-user fa-lg"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span class="menu-color">Member</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/group" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span class="menu-color">Group</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/church" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-church"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span class="menu-color">Church</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/admin" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-lock fa-lg"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span class="menu-color">Admin</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/logout" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-right-from-bracket fa-lg"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span class="menu-color">Logout</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- LOADING -->
+        <section id="loading">
+            <div class="d-flex justify-content-between align-items-center">
+                <img src="/static/images/loading.gif">
+            </div>
+        </section>
+        <!-- LOADING -->
+        <!-- CONTENT -->
+        <section id="content">
+            <div id="page-content-wrapper" class="bg-content">
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button class="btn-menu btn btn-toggle-menu btn-sidebar" type="button">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <i class="fa-solid fa-bars"></i>
+                                    </div>
+                                    <div class="col-10">
+                                        <div class="nav-header">Home / Report</div>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="title-page">Report Details</h1>
+                            <div>
+                            <!-- ADD DATA -->
+                                <div class="modal fade pop-up" id="addNewData" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Add Report</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label for="date" class="form-label">Date</label>
+                                                <input required type="date" class="form-control" id="date_add" name="date_add"/>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="church" class="form-label">Member Name</label>
+                                                <select required name="id_member_add" id="id_member_add" class="form-select"></select>
+                                            </div>
+                                            <!-- <div class="mb-3">
+                                                <label for="report" class="form-label" >Report</label>
+                                                <input required type="text" class="form-control" id="report_add" name="report_add"/>
+                                            </div> -->
+                                            <div class="mb-3">
+                                                <div class="row" style="margin-bottom: 10px;">
+                                                    <div class="col">
+                                                        <label for="chapter" class="form-label">Chapters</label>
+                                                    </div>
+                                                    <div class="d-flex col justify-content-end">
+                                                        <div class="btn btn-primary" id="addRowBtn" onclick="addRow('add')">+ Add New Row</div>
+                                                    </div>
+                                                </div>
+                                                <div id="chapter_container_add">
+                                                    <div class="d-flex mb-3">
+                                                        <select required name="book_name_add" id="book_name_add" class="form-select editreport me-2 col1" onchange="loadChapters('add');">
+                                                            <option value="" selected="selected">Book</option>
+                                                        </select>
+                                                        <select required name="chapter_number_add" id="chapter_number_add" class="form-select edit_report me-2 col2">
+                                                            <option value="" selected="selected">Num</option>
+                                                        </select>
+                                                        <i class="fa-solid fa-trash btn btn-danger col3" id="btn_delete_add" onclick="deleteRowDetail(event)"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-sec" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-main" id="addBtn"> Add Report</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ADD DATA -->
+                            <!-- EDIT DATA -->
+                            <div class="modal fade pop-up" id="editData" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Report</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <input type="hidden" class="form-control" id="id_report_edit" name="id_report_edit" />
+                                                <label for="date" class="form-label">Date</label>
+                                                <input required type="date" class="form-control" id="date_edit" name="date_edit" />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="church" class="form-label">Member Name</label>
+                                                <select required name="id_member_edit" id="id_member_edit" class="form-select"></select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="report" class="form-label" >Report</label>
+                                                <input required type="text" class="form-control" id="report_edit" name="report_edit"/>
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="row" style="margin-bottom: 10px;">
+                                                    <div class="col">
+                                                        <label for="chapter" class="form-label">Chapters</label>
+                                                    </div>
+                                                    <div class="d-flex col justify-content-end">
+                                                        <div class="btn btn-primary" id="addRowBtn" onclick="addRow('edit')">+ Add New Row</div>
+                                                    </div>
+                                                </div>
+                                                <div id="chapter_container">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-sec" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-main" id="editBtn">Edit Report</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- EDIT DATA -->
+                            
+                            <!-- UPLOAD DATA -->
+                            <div class="modal fade pop-up upload-modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document" style="max-width: 1000px; width: 80%;">
+                                    <div class="modal-content" >
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Report Data Preview</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>    
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="info-upload"><i class="fa-solid fa-circle-exclamation" style="color: #474747;"></i> Nama member harus sesuai dengan nama kontak WA</p>
+                                            <table id="dataTable" class="table">
+                                                <thead>
+                                                    <tr></tr>
+                                                </thead>
+                                                <tbody id="upload-tbl-body"></tbody>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button id="saveBtn" class="btn btn-success">Save to Database</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- UPLOAD DATA -->
+
+                            <!-- UPLOAD INFO -->
+                            <div class="modal fade pop-up" id="info-upload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Upload Chat Guide</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>    
+                                        </div>
+                                        <div class="modal-body">
+                                            Untuk menggunakan fitur unggah file WA, Anda dapat mengikuti langkah-langkah berikut:<br><br>
+                                            <ol type="1">
+                                                <li>
+                                                    Pilih tanggal sesuai dengan pesan yang ingin dimasukkan ke dalam basis data
+                                                </li>
+                                                <li>
+                                                    Klik tombol 'Upload Chat' dan pilih file pesan WA yang sudah diekspor sebelumnya
+                                                </li>
+                                                <li>
+                                                    Tunggu hingga muncul pop-up yang berisikan data-data yang akan masuk ke dalam basis data
+                                                </li>
+                                                <li>
+                                                    Lakukan pemeriksaan kembali terhadap data dan lakukan perbaikan jika ada yang salah
+                                                </li>
+                                                <li>
+                                                    Klik tombol 'Save to Database dan data anda berhasil disimpan
+                                                </li>
+                                            </ol>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--  UPLOAD INFO -->
+
+                            <!-- AUTO RECAP INFO -->
+                            <div class="modal fade pop-up info-recap" id="info-recap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Auto Recapitulation Guide</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>    
+                                        </div>
+                                        <div class="modal-body">
+                                            Untuk menggunakan fitur rekapitulasi otomatis, Anda dapat mengikuti langkah-langkah berikut:<br><br>
+                                            <ol type="1">
+                                                <li>
+                                                    Pilih kelompok untuk rekapitulasi otomatis 
+                                                </li>
+                                                <li>
+                                                    Pilih tanggal yang ingin dibuat sebagai rekapitulasi 
+                                                </li>
+                                                <li>
+                                                    Tunggu hingga loading selesai dan akan muncul nama kitab dan pasal sesuai dengan perkiraan jadwal
+                                                </li>
+                                                <li>
+                                                    Kitab dan pasal dapat diubah sesuai kebutuhan. Kitab dan pasal ini merupakan pasal terakhir bacaan pada tanggal yang ingin dibuat rekapitulasi.
+                                                </li>
+                                                <li>
+                                                    Pilih emoji sesuai keinginan
+                                                </li>
+                                                <li>
+                                                    Klik tombol 'Generate' dan dapatkan hasil rekapitulasi
+                                                </li>
+                                                <li>
+                                                    Klik tombol 'Copy' untuk menyalin teks rekapitulasi
+                                                </li>
+                                            </ol>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- AUTO RECAP INFO -->
+
+                            <!-- <div class="graph-bg"> -->
+                            <div class="bg-table" style="margin-bottom: 10px;">
+                                <!-- UPLOAD FILE BUTTON -->
+                                <label class="form-label graph-title">UPLOAD WHATSAPP FILE</label>&nbsp;
+                                <i data-bs-toggle="modal" data-bs-target="#info-upload" class="fa-solid fa-circle-info" style="color: #626364;;"></i>
+                                <div class="d-flex justify-content-start">
+                                    <input type="date" id="date" />&ensp;
+                                    <button class="btn btn-primary" onclick="document.getElementById('file').click()">Upload Chat</button>
+                                    <input type="file" accept=".txt" name="file" id="file" style="display: none">
+                                </div>
+                                <!-- UPLOAD FILE BUTTON -->
+                            </div>
+
+                            <!-- AUTO RECAP -->
+                            <!-- <div class="graph-bg" style="margin-left: 5px;"> -->
+                            <div class="bg-table">
+                                <label for="date" class="form-label graph-title">AUTO RECAPITULATION</label>&nbsp; 
+                                <i data-bs-toggle="modal" data-bs-target="#info-recap" class="fa-solid fa-circle-info" style="color: #626364;"></i>
+                                
+                                <!-- <i data-bs-toggle="modal" data-bs-target="#info-recap" class="fa-solid fa-circle-info" style="color: #626364;"></i> -->
+                                <div class="row">
+                                    <!-- GROUP DROPDOWN -->
+                                    <div class="col-8">
+                                        <select name="id_group" id="id_group" class="form-select report_dropdown"></select><br>
+                                    </div>
+                                    <!-- GROUP DROPDOWN -->
+
+                                    <div class="col-4">
+                                        <input type="date" placeholder="Select Date" class="form-control auto-report-select" id="input_date" name="input_date" onchange="setChapter()"style="width: 100%; margin-bottom: 10px;"/>
+                                    </div>
+
+                                    <!-- <div class="col-1">
+                                        <i data-bs-toggle="modal" data-bs-target="#info-recap" class="fa-solid fa-circle-info" style="color: #626364;"></i>
+                                    </div> -->
+                                </div>
+                                
+                                <div class="row" style="padding-bottom: 10px;">
+                                    <div class="col-4">
+                                        <select name="book_name" id="book_name" class="form-select auto-report-select" onchange="loadChapters('recap')">
+                                            <option value="" selected="selected">Book</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-3">
+                                        <select name="chapter_number" id="chapter_number" class="form-select auto-report-select">
+                                            <option value="" selected="selected">Num</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-3">
+                                        <select name="emoji_option" id="emoji_option" class="form-select report_dropdown">
+                                            <option value=":check_mark_button:">&#9989;</option>
+                                            <option value=":butterfly:">&#129419;</option>
+                                            <option value=":sparkles:">&#10024;</option>
+                                            <option value=":fire:">&#128293;</option>
+                                            <option value=":first_quarter_moon:">&#127763;</option>
+                                            <option value=":chequered_flag:">&#127937;</option>
+                                            <option value=":cherries:">&#127826;</option>
+                                            <option value=":clapping_hands_medium-light_skin_tone:">&#128079;&#127996;</option>
+                                            <option value=":growing_heart:">&#128151;</option>
+                                            <option value=":heart_on_fire:">&#10084;&#65039;&#8205;&#128293;</option>
+                                            <option value=":potted_plant:">&#129716;</option>
+                                            <option value=":sunflower:">&#127803;</option>
+                                            <option value=":turtle:">&#128034;</option>
+                                            <option value=":umbrella_on_ground:">&#9969;&#65039;</option>
+                                            <option value=":whale:">&#128011;</option>
+                                            <option value=":smiling_face_with_heart-eyes:">&#128525;</option>
+                                            <option value=":smiling_face_with_sunglasses:">&#128526;</option>
+                                            <option value=":sailboat:">&#9973;</option>
+                                            <option value=":star:">&#11088;</option>
+                                        </select><br>
+                                    </div>
+
+                                    <div class="col-2">
+                                        <button onclick="loadReport()" class="btn dashboard-btn" style="width: 100%;">Generate</button>
+                                    </div>
+
+                                    <!-- <div class="col-1">
+                                        <i data-bs-toggle="modal" data-bs-target="#info-recap" class="fa-solid fa-circle-info" style="color: #626364;"></i>
+                                    </div> -->
+                                </div>
+                                <!-- <button onclick="loadReport()" class="btn dashboard-btn">Generate</button> -->
+                                <div id="textarea-container">
+                                    <textarea id="recap-text-area" class="text-area" readonly></textarea>
+                                    <div class="button d-flex justify-content-end">
+                                        <!-- <i data-bs-toggle="modal" data-bs-target="#info-recap" class="fa-solid fa-circle-info" style="color: #626364;"></i> &ensp; -->
+                                        <button id="copy-button" class="btn dashboard-btn">Copy</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- AUTO RECAP -->
+
+                            <div class="row">
+                                <div class="col graph-bg" style="margin-right: 5px;">
+                                    <label class="form-label graph-title">REPORT MANAGEMENT</label>
+                                    <div class="row">
+                                        <div class="col d-flex justify-content-start">
+                                            <select name="id_group_select" id="id_group_select" class="form-select report_dropdown"></select>
+                                        </div>
+                                        <div class="col d-flex justify-content-end">
+                                            <button type="button" class="btn btn-calvin" data-bs-toggle="modal" data-bs-target="#addNewData" onclick="loadMembersByGroup()">
+                                                Add Data
+                                            </button>
+                                        </div>
+                                    </div> <br>
+                                    <!-- <div class="d-flex justify-content-start">
+                                        <select name="id_group" id="id_group" class="form-select report_dropdown" style="width:40%"></select>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" class="btn btn-calvin" data-bs-toggle="modal" data-bs-target="#addNewData" onclick="loadMembersByGroup()">
+                                            Add Data
+                                        </button>
+                                    </div> <br> -->
+                                    <!-- TABLE -->
+                                    <table id="tbl-report" class="mt-3 table">
+                                        <thead class="tbl-header">
+                                            <tr>
+                                                <td>DATE</td>
+                                                <td>MEMBER</td>
+                                                <td>REPORT</td>
+                                                <td>CHAPTERS</td>
+                                                <td>ACTION</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="tbl-body"></tbody>
+                                    </table>
+                                    <!-- TABLE -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- CONTENT -->
+    </div>
+    <script>
+    $(function () {
+        $(".btn-toggle-menu").click(function () {
+            $("#wrapper").toggleClass("toggled");
+        });
+    });
+    const TABLE = $("#tbl-report").DataTable({
+        language: {
+            search: "",
+            searchPlaceholder: "Search",
+        },
+    });
+
+    var DATA;
+    var MASTERCHAPTERDATA;
+    var OLDDETAILSDATA;
+
+    function loadData() {
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('content').style.display = 'none';
+        
+        TABLE.clear().draw();
+        $.ajax({
+            url: "/load-data-report",
+            method: "GET",
+            success: function (response) {
+                if (response.status) {
+                    var data = [];
+                    DATA = response.data;
+                    response.data.forEach(function (element, index) {
+                        let row = [];
+                        row.push(element.date);
+                        row.push(element.member_name);
+                        row.push(element.report);
+                        row.push(element.chapter_name.join(", "));
+                        row.push(
+                            `<button class="btn btn-update" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editData" onclick="setDetails(${index})"><i class="fa-solid fa-pen" style="color: #144FC0;"></i></button>
+                            <button class="btn btn-del" onclick="deleteData(${element.id_report})"><i class="fa-solid fa-trash" style="color: #E32221;"></i></button>`
+                        );
+                        data.push(row);
+                    });
+                    TABLE.rows.add(data).draw();
+                    loadMember();
+                } else {
+                    Swal.fire({
+                        title: "Oops!!!",
+                        text: response.msg,
+                        icon: "error",
+                    });
+                }
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+            },
+        });
+    }
+    function loadMasterChapter() {
+        $.ajax({
+            url: `/get-master-chapter`,
+            method: "GET",
+            success: function (response) {
+                if (response.status) {
+                    MASTERCHAPTERDATA = response.data;
+                }
+            },
+        });
+    }
+    function deleteData(id) {
+        Swal.fire({
+            title: "Are you sure to delete this?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/delete-data-report?id_report=${id}`,
+                    method: "GET",
+                    success: function (response) {
+                        if (response.status) {
+                            toastr["success"]("Success delete data");
+                            loadData();
+                        } else {
+                            Swal.fire({
+                                title: "Oops!!!",
+                                text: response.msg,
+                                icon: "error",
+                            });
+                        }
+                    },
+                });
+            }
+        });
+    }
+    function loadMember() {
+        $.ajax({
+            url: `/load-data-member`,
+            method: "GET",
+            success: function (response) {
+                if (response.status) {
+                    var data = [];
+                    response.data.forEach(function (element, index) {
+                        let option = document.createElement("option");
+                        option.text = element.member_name;
+                        option.value = element.id_member;
+                        $("#id_member_edit").append(option);
+                    });
+                    loadGroup();
+                }
+            },
+        });
+    }
+    function loadMembersByGroup() {
+        $.ajax({
+            url: `/load-member-by-group?id_group=${$("#id_group_select").val()}`,
+            method: "GET",
+            success: function (response) {
+                if (response.status) {
+                    $("#id_member_add").empty();
+                    // console.log(596, response.data)
+                    response.data.forEach(function (element, index) {
+                        let option = document.createElement("option");
+                        option.text = element.member_name;
+                        option.value = element.id_member;
+                        $("#id_member_add").append(option);
+                    });
+                }
+            },
+        });
+    }
+    function setDetails(index) {
+        document.getElementById('chapter_container').innerHTML = "";
+        var data = DATA[index];
+        $("#id_report_edit").val(data.id_report);
+        $("#date_edit").val(data.date);
+        $("#id_member_edit").val(data.id_member);
+        $("#report_edit").val(data.report);
+        OLDDETAILSDATA = data.id_report_details;
+        let id = []
+        for (const key in data.chapter_name) {
+            const chapter_name = data.chapter_name[key]; // kejadian 1
+            let temp = chapter_name.split(' ')  // [kejadian, 1]
+            let book_name = temp.slice(0, temp.length - 1); // kejadian 
+            book_name = book_name.join(' '); 
+            let chapter_number = temp[temp.length - 1]; // 1    
+            
+            let codeOptionBook = ``;
+            let codeOptionChapter = ``;
+            for (const book of MASTERCHAPTERDATA) { 
+                let book_name2 = Object.keys(book)[0];
+                codeOptionBook += `<option value="${book_name2}">${book_name2}</option>`
+                if (book_name == book_name2) {
+                    let min_max_number = findObjectByKey(MASTERCHAPTERDATA, book_name2)
+                    for (let i = min_max_number['min']; i <= min_max_number['max']; i++){
+                        codeOptionChapter += `<option value="${i}">${i}</option>`
+                    }
+                }
+            }
+            $(`#${key}`).remove();
+            let code = `<div class="d-flex mb-3" id="${key}">
+                            <input type="hidden" id="id_details_${key}" class="col0" value="${data.id_report_details[key]}">
+                            <select name="book_name_edit_${key}" id="book_name_edit_${key}"d class="form-select editreport me-2 col1" onchange="loadChapters2('edit', ${key});">
+                                <option value="${book_name}" selected="selected">${book_name}</option>
+                                ${codeOptionBook}
+                            </select>
+                            <select name="chapter_number_edit_${key}" id="chapter_number_edit_${key}" class="form-select edit_report me-2 col2">
+                                <option value="${chapter_number}" selected="selected">${chapter_number}</option>
+                                ${codeOptionChapter}
+                            </select>
+                            <i class="fa-solid fa-trash btn btn-danger col3" id="btn_delete_edit_${key}" onclick="deleteRowDetail(event)"></i>
+                        </div> `
+            document.getElementById('chapter_container').innerHTML += code
+        }
+    }
+    function findObjectByKey(array, key) {
+        for (let i = 0; i < array.length; i++) {
+            if (array[i][key]) {
+                return array[i][key];
+            }
+        }
+        return null; // If key is not found
+    }
+    function loadGroup() {
+        $.ajax({
+        url: `/load-data-group`,
+        method: "GET",
+        success: function (response) {
+            $("#id_group").empty();
+            // console.log(response)
+            if (response.status) {
+            
+            var data = [];
+            response.data.forEach(function (element, index) {
+                let option = document.createElement("option");
+                let option2 = document.createElement("option");
+                
+                if (element.group_name != 'anonymous') {
+                option.text = element.group_name;
+                option.value = element.id_group;
+                $("#id_group").append(option);
+                option2.text = element.group_name;
+                option2.value = element.id_group;
+                $("#id_group_select").append(option2);
+                }
+            });
+            }
+            loadBooknames();
+        },
+        });
+    }
+    // Function to load book names
+    function loadBooknames() {
+        $.ajax({
+        url: `/load-data-booknames`,
+        method: "GET",
+        success: function (response) {
+            console.log(response)
+            if (response.status) {
+            $("#book_name").empty();
+            $("#book_name_add").empty();
+            $("#book_name_edit").empty();
+            let defaultOption = new Option('Book', 'Book')
+            $("#book_name").append(defaultOption);
+            $("#book_name_add").append(defaultOption);
+            response.data.forEach(function (element, index) {
+                let option = new Option(element.book_name, element.book_name);
+                $("#book_name").append(option);
+                let option2 = new Option(element.book_name, element.book_name);
+                $("#book_name_add").append(option2);
+                let option3 = new Option(element.book_name, element.book_name);
+                $("#book_name_edit").append(option3);
+            });
+            loadMasterChapter();
+            }
+        },
+        });
+    }
+    // Function to load chapters based on selected book name
+    function loadChapters(status) {
+        var selectedBook = $("#book_name").val();
+        var selectedBookAdd = $("#book_name_add").val();
+        var selectedBookEdit = $("#book_name_edit").val();
+
+        if (status==='recap') {
+            // Clear previous chapters
+            $("#chapter_number").empty();
+            
+            // Send AJAX request to get chapters
+            $.ajax({
+                url: `/load-data-chapters?book_name=${selectedBook}`,
+                method: "GET",
+                success: function (response) {
+                console.log(response)
+                if (response.status) {
+                    response.data.forEach(function (element, index) {
+                    let option = new Option(element.chapter_number, element.chapter_number);
+                    $("#chapter_number").append(option);
+                    });
+                }
+                },
+            });
+        } else if (status==='add') {
+            // Clear previous chapters
+            $("#chapter_number_add").empty();
+            
+            // Send AJAX request to get chapters
+            $.ajax({
+                url: `/load-data-chapters?book_name=${selectedBookAdd}`,
+                method: "GET",
+                success: function (response) {
+                console.log(response)
+                if (response.status) {
+                    response.data.forEach(function (element, index) {
+                    let option = new Option(element.chapter_number, element.chapter_number);
+                    $("#chapter_number_add").append(option);
+                    });
+                }
+                },
+            });
+        } else if (status==='edit') {
+            $("#chapter_number_edit").empty();
+            // Send AJAX request to get chapters
+            $.ajax({
+                url: `/load-data-chapters?book_name=${selectedBookEdit}`,
+                method: "GET",
+                success: function (response) {
+                console.log(response)
+                if (response.status) {
+                    response.data.forEach(function (element, index) {
+                    let option = new Option(element.chapter_number, element.chapter_number);
+                    $("#chapter_number_edit").append(option);
+                    
+                    });
+                }
+                },
+            });
+        } else {
+            // If no book selected, clear chapters dropdown
+            $("#chapter_number").empty();
+            $("#chapter_number").append("<option value=''>Select Chapter</option>");
+
+            $("#chapter_number_edit").empty();
+            $("#chapter_number_edit").append("<option value=''>Select Chapter</option>");
+
+            $("#chapter_number_add").empty();
+            $("#chapter_number_add").append("<option value=''>Select Chapter</option>");
+        }
+    }
+    function loadChapters2(status, key) {
+        var selectedBook = $("#book_name").val();
+        var selectedBookAdd = $(`#book_name_add_${key}`).val();
+        var selectedBookEdit = $(`#book_name_edit_${key}`).val();
+        console.log(645, selectedBookEdit)
+        if (status==='recap') {
+            // Clear previous chapters
+            $("#chapter_number").empty();
+            // Send AJAX request to get chapters
+            $.ajax({
+                url: `/load-data-chapters?book_name=${selectedBook}`,
+                method: "GET",
+                success: function (response) {
+                if (response.status) {
+                    response.data.forEach(function (element, index) {
+                    let option = new Option(element.chapter_number, element.chapter_number);
+                    $("#chapter_number").append(option);
+                    });
+                }
+                },
+            });
+        } else if (status === 'add') {
+            // Clear previous chapters
+            $(`#chapter_number_add_${key}`).empty();
+            // Send AJAX request to get chapters
+            $.ajax({
+                url: `/load-data-chapters?book_name=${selectedBookAdd}`,
+                method: "GET",
+                success: function (response) {
+                if (response.status) {
+                    response.data.forEach(function (element, index) {
+                    let option = new Option(element.chapter_number, element.chapter_number);
+                    $(`#chapter_number_add_${key}`).append(option);
+                    });
+                }
+                },
+            });
+        } else if (status==='edit') {
+            $(`#chapter_number_edit_${key}`).empty();
+            // Send AJAX request to get chapters
+            $.ajax({
+                url: `/load-data-chapters?book_name=${selectedBookEdit}`,
+                method: "GET",
+                success: function (response) {
+                console.log(671, response)
+                if (response.status) {
+                    response.data.forEach(function (element, index) {
+                    let option = new Option(element.chapter_number, element.chapter_number);
+                    $(`#chapter_number_edit_${key}`).append(option);
+                    
+                    });
+                }
+                },
+            });
+        } else {
+            // If no book selected, clear chapters dropdown
+            $("#chapter_number").empty();
+            $("#chapter_number").append("<option value=''>Select Chapter</option>");
+
+            $(`#chapter_number_edit_${key}`).empty();
+            $(`#chapter_number_edit_${key}`).append("<option value=''>Select Chapter</option>");
+        }
+    }
+    function loadReport() {
+        $.ajax({
+            url: `/auto-recap?id_group=${$("#id_group").val()}&input_date=${$("#input_date").val()}&book_name=${$("#book_name").val()}&chapter_number=${$("#chapter_number").val()}&emoji_option=${$("#emoji_option").val()}`,
+            method: "GET",
+            success: function (response) {
+                if (response.status) {
+                    let textAreaContent = "";
+                    response.data.recap.forEach(element => {
+                        textAreaContent += element + "\n";
+                    })
+                    $("#recap-text-area").val(textAreaContent);
+                } else {
+                    Swal.fire({
+                        title: "Oops!!!",
+                        text: response.msg,
+                        icon: "error", 
+                    })
+                }
+            },
+        });
+    }
+    function setChapter() {
+        document.getElementById('loading').style.display = 'block';
+        document.getElementById('content').style.display = 'none';
+        $.ajax({
+            url: `/set-chapter-recap`,
+            method: "POST",
+            data: {
+                id_group: document.getElementById("id_group").value,
+                input_date: document.getElementById("input_date").value,
+            },
+            success: function (response) {
+                console.log(886, response);
+                if (response.status) {
+                    
+                    let bookNameInput = document.getElementById("book_name")
+                    let chapterNumberInput = document.getElementById("chapter_number")
+                    for (var i = 0; i < bookNameInput.options.length; i++) {
+                        if (bookNameInput.options[i].value === response.data.schedule[0].book_name) {
+                            bookNameInput.selectedIndex = i;
+                            break; 
+                        }
+                    }
+                    loadChapters('recap');
+                    sleep(1500).then(() => {
+                        for (var i = 0; i < chapterNumberInput.options.length; i++) {
+                            if (chapterNumberInput.options[i].value == response.data.schedule[0].number.toString()) {
+                                chapterNumberInput.selectedIndex = i;
+                                break; 
+                            }
+                        }
+                        document.getElementById('loading').style.display = 'none';
+                        document.getElementById('content').style.display = 'block';
+                    });
+                    
+                } else {
+                    Swal.fire({
+                        title: "Oops!!!",
+                        text: response.msg,
+                        icon: "error", 
+                    })
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('content').style.display = 'block';
+                    // location.reload();
+                }
+            },
+        });
+    }
+    document.getElementById("copy-button").addEventListener("click", function() {
+        var textarea = document.getElementById("recap-text-area");
+        textarea.select();
+        document.execCommand("copy");
+        Swal.fire({
+            icon: 'success',
+            title: 'Copied!',
+            text: 'Text copied to clipboard.',
+            timer: 1500 // Automatically close after 2 seconds
+        });
+    });
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    window.onload = loadData;
+    
+    // UPLOAD TXT FILE
+    $(document).ready(function () {
+        $("#file").change(function () {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $.ajax({
+                type: "POST",
+                url: "/upload-file",
+                
+                data: { base64_data: e.target.result },
+                success: function (response) {
+                // console.log(response);
+                },
+            });
+            // console.log(e.target.result);
+        };
+        reader.readAsDataURL(this.files[0]);
+        });
+    });
+
+    $(document).ready(function() {
+        $('#uploadBtn').on('click', function() {
+        $('#file').click();
+        });
+
+        $("#file").change(function () {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $.ajax({
+            type: "POST",
+            url: "/upload-file",
+            data: {base64_data: e.target.result ,
+                    date: document.getElementById('date').value},
+            success: function (response) {
+            if (response.status) {
+                // console.log(response);
+                var tableHeaders = '<tr>';
+                
+                tableHeaders += '<th> Nama </th>';
+                tableHeaders += '<th> Chat WhatsApp </th>';
+                tableHeaders += '<th> Daftar Pasal yang Dibaca </th>';
+                tableHeaders += '<th> </th>';
+                
+                tableHeaders += '</tr>';
+                $('#dataTable thead').html(tableHeaders);
+
+                var tableData = '';
+                response.data.forEach(function(element, index) {
+                    tableData += '<tr>' ;
+                    tableData += `<td><input type="text" class="form-control column1" value="${element.name}"></td>`;
+                    tableData += `<td><input type="text" disabled class="form-control column2" value="${element.report_chat}"></td>`;
+                    tableData += `<td><input type="text" class="form-control column3" value="${element.parsed}"></td>`;
+                    tableData += `<td><i class="fa-solid fa-trash btn btn-danger" id="${index}" onclick="deleteRow(event)"></i></td>`;
+                    tableData += '</tr>' ;
+                });
+                $('#dataTable tbody').html(tableData);
+
+                // Show the modal
+                $('#myModal').modal('show');
+            } else {
+                Swal.fire({
+                title: "Oops!!!",
+                text: response.msg,
+                icon: "error",
+                });
+            }
+            }
+            });
+            console.log(e.target.result);
+        };
+        reader.readAsDataURL(this.files[0]);
+        });
+
+        $('#saveBtn').click(function() {
+        var tableData = [];
+        $('#upload-tbl-body tr').each(function(index) {
+            var rowData = {};
+            $(this).find('input').each(function(index) {
+            console.log($(this).val())
+            var columnName = $(this).attr('class').split(' ')[1]; // Get column class name
+            rowData[columnName] = $(this).val();
+            });
+            tableData.push(rowData);    
+        });
+
+        let params = {
+            data: tableData,
+            date: document.getElementById('date').value
+        }
+
+        $.ajax({
+        url: "/upload-to-db",
+        method: "POST",
+        data: JSON.stringify(params),
+        contentType: 'application/json',
+        success: function (response) {
+            if (response.status) {
+            loadData();
+            $('#myModal').modal('hide');
+            }
+        }
+        }).then(function (response) {
+            location.reload();
+        });
+    });
+    });
+
+    // ADD ROW
+    function addRow(status){
+        let codeOptionBook = ``;
+        for (const book of MASTERCHAPTERDATA) { 
+            let book_name2 = Object.keys(book)[0];
+            codeOptionBook += `<option value="${book_name2}">${book_name2}</option>`
+        }
+        let newId = document.querySelectorAll('.col1').length;
+        if (status === 'add') {
+            // Create the main div element
+            var mainDiv = document.createElement("div");
+            mainDiv.classList.add("d-flex", "mb-3");
+            mainDiv.id = newId;
+
+            // Create the first select element
+            var selectBook = document.createElement("select");
+            selectBook.name = "book_name_add_" + newId;
+            selectBook.id = "book_name_add_" + newId;
+            selectBook.classList.add("form-select", "editreport", "me-2", "col1");
+            selectBook.addEventListener("change", function() {
+                loadChapters2('add', newId);
+            });
+
+            // Create the default option for the select element
+            var defaultOptionBook = document.createElement("option");
+            defaultOptionBook.selected = "selected";
+            defaultOptionBook.textContent = "Book";
+            selectBook.appendChild(defaultOptionBook);
+
+            // Append the codeOptionBook options to the select element
+            selectBook.innerHTML += codeOptionBook;
+
+            // Create the second select element
+            var selectChapter = document.createElement("select");
+            selectChapter.name = "chapter_number_add_" + newId;
+            selectChapter.id = "chapter_number_add_" + newId;
+            selectChapter.classList.add("form-select", "edit_report", "me-2", "col2");
+
+            // Create the default option for the select element
+            var defaultOptionChapter = document.createElement("option");
+            defaultOptionChapter.selected = "selected";
+            defaultOptionChapter.textContent = "Number";
+            selectChapter.appendChild(defaultOptionChapter);
+
+            // Create the delete button
+            var deleteButton = document.createElement("i");
+            deleteButton.classList.add("fa-solid", "fa-trash", "btn", "btn-danger", "col3");
+            deleteButton.id = "btn_delete_add_" + newId;
+            deleteButton.addEventListener("click", deleteRowDetail);
+
+            // Append all elements to the main div
+            mainDiv.appendChild(selectBook);
+            mainDiv.appendChild(selectChapter);
+            mainDiv.appendChild(deleteButton);
+
+            // Append the main div to the chapter_container_add element
+            document.getElementById("chapter_container_add").appendChild(mainDiv);
+
+            // let code = `<div class="d-flex mb-3" id="${newId}">
+            //                 <select name="book_name_add_${newId}" id="book_name_add_${newId}" class="form-select editreport me-2 col1" onchange="loadChapters2('add', ${newId})">
+            //                     <option selected="selected">Book</option>
+            //                     ${codeOptionBook}
+            //                 </select>
+            //                 <select name="chapter_number_add_${newId}" id="chapter_number_add_${newId}" class="form-select edit_report me-2 col2">\
+            //                     <option selected="selected">Number</option>
+            //                 </select> 
+            //                 <i class="fa-solid fa-trash btn btn-danger col3" id="btn_delete_edit_${newId}" onclick="deleteRowDetail(event)"></i>
+            //             </div> `
+            // document.getElementById('chapter_container_add').innerHTML += code
+        } else {
+            // Create the main div element
+            var mainDiv = document.createElement("div");
+            mainDiv.classList.add("d-flex", "mb-3");
+            mainDiv.id = newId;
+
+            // Create the hidden input element
+            var hiddenInput = document.createElement("input");
+            hiddenInput.type = "hidden";
+            hiddenInput.classList.add("col0");
+            hiddenInput.value = "new";
+            hiddenInput.id = "id_details_" + newId;
+
+            // Create the select element for book name
+            var selectBook = document.createElement("select");
+            selectBook.name = "book_name_edit_" + newId;
+            selectBook.id = "book_name_edit_" + newId;
+            selectBook.classList.add("form-select", "editreport", "me-2", "col1");
+            selectBook.addEventListener("change", function() {
+                loadChapters2('edit', newId);
+            });
+
+            // Create the default option for the select element
+            var defaultOptionBook = document.createElement("option");
+            defaultOptionBook.selected = "selected";
+            defaultOptionBook.textContent = "Book";
+            selectBook.appendChild(defaultOptionBook);
+
+            // Append the codeOptionBook options to the select element
+            selectBook.innerHTML += codeOptionBook;
+
+            // Create the select element for chapter number
+            var selectChapter = document.createElement("select");
+            selectChapter.name = "chapter_number_edit_" + newId;
+            selectChapter.id = "chapter_number_edit_" + newId;
+            selectChapter.classList.add("form-select", "edit_report", "me-2", "col2");
+
+            // Create the default option for the select element
+            var defaultOptionChapter = document.createElement("option");
+            defaultOptionChapter.selected = "selected";
+            defaultOptionChapter.textContent = "Number";
+            selectChapter.appendChild(defaultOptionChapter);
+
+            // Create the delete button
+            var deleteButton = document.createElement("i");
+            deleteButton.classList.add("fa-solid", "fa-trash", "btn", "btn-danger", "col3");
+            deleteButton.id = "btn_delete_edit_" + newId;
+            deleteButton.addEventListener("click", deleteRowDetail);
+
+            // Append all elements to the main div
+            mainDiv.appendChild(hiddenInput);
+            mainDiv.appendChild(selectBook);
+            mainDiv.appendChild(selectChapter);
+            mainDiv.appendChild(deleteButton);
+
+            // Append the main div to the chapter_container_edit element
+            document.getElementById("chapter_container").appendChild(mainDiv);
+
+        }
+    }
+
+    function deleteRow(event) {
+        var row = document.getElementById(event.srcElement.id).closest('tr');
+        row.remove();
+    }
+
+    function deleteRowDetail(event){
+        var row = document.getElementById(event.srcElement.id).closest('div');
+        row.remove();
+    }
+
+    // EDIT REPORT
+    $('#editBtn').click(function() {
+        var chapterData = [];
+        $('#chapter_container').each(function(index) {
+            console.log(868, $(this).find('.d-flex'))
+            $(this).find('.d-flex').each(function(index) {
+                var rowData = {};
+                $(this).find('input').each(function(index){
+                    var idColumn = $(this).attr('class').split(' ')[0]; // Get column class name
+                    rowData[idColumn] = $(this).val();   
+                });
+                $(this).find('select').each(function(index){
+                    var columnName = $(this).attr('class').split(' ')[3]; // Get column class name
+                    rowData[columnName] = $(this).val();   
+                });
+                chapterData.push(rowData);
+            });
+        });
+        let valueIdReport = document.getElementById('id_report_edit').value
+        let valueDate = document.getElementById('date_edit').value
+        let valueIdMember = document.getElementById('id_member_edit').value
+        let valueReport = document.getElementById('report_edit').value
+        let params = {
+            id_report: valueIdReport,
+            date: valueDate,
+            id_member: valueIdMember,
+            report: valueReport,
+            chapterData: chapterData,
+            old_details_data: OLDDETAILSDATA,
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/update-data-report',
+            data: JSON.stringify(params),
+            contentType: 'application/json',
+            success: function(response) {
+                $('#editData').modal('hide');
+                loadData();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+
+    // ADD REPORT
+    $('#addBtn').click(function() {
+        var chapterDataAdd = [];
+        $('#chapter_container_add').each(function(index) {
+            // console.log(868, $(this).find('.d-flex'))
+            $(this).find('.d-flex').each(function(index) {
+                var rowData = {};
+                $(this).find('select').each(function(index){
+                    var columnName = $(this).attr('class').split(' ')[3]; // Get column class name
+                    rowData[columnName] = $(this).val();   
+                });
+                chapterDataAdd.push(rowData);
+            });
+        });
+        let valueDateAdd = document.getElementById('date_add').value
+        let valueIdMemberAdd = document.getElementById('id_member_add').value
+        // let valueReportAdd = document.getElementById('report_add').value
+        let params = {
+            date: valueDateAdd,
+            id_member: valueIdMemberAdd,
+            // report: valueReportAdd,
+            chapterData: chapterDataAdd
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/add-data-report',
+            data: JSON.stringify(params),
+            contentType: 'application/json',
+            success: function(response) {
+                // alert('Added!');
+                $('#addNewData').modal('hide');
+                document.getElementById('date_add').value = '';
+                // document.getElementById('report_add').value = '';
+                loadData();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+    </script>
+</body>
+</html>

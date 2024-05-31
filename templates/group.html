@@ -1,0 +1,531 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Group Management</title>
+    <link rel="icon" href="/static/images/grii-logo.png" type="image/x-icon"/>
+    
+    <script src="/static/jquery/jquery.min.js"></script>
+
+    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css" />
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <!-- BOOTSTRAP -->
+
+    <!-- FONTAWESOME -->
+    <link rel="stylesheet" href="/static/fontawesome/css/all.min.css" />
+    <!-- FONTAWESOME -->
+
+    <!-- SWEETALERT2 -->
+    <link rel="stylesheet" href="/static/sweetalert2/sweetalert2.css" />
+    <script src="/static/sweetalert2/sweetalert2.js"></script>
+    <!-- SWEETALERT2 -->
+
+    <!-- TOASTR -->
+    <script src="/static/toastr/toastr.min.js"></script>
+    <link rel="stylesheet" href="/static/toastr/toastr.min.css" />
+    <!-- TOASTR -->
+    <script src="/static/js/main.js"></script>
+
+    <!-- DATATABLE -->
+    <link rel="stylesheet" href="/static/datatable/datatable.css" />
+    <script src="/static/datatable/datatable.js"></script>
+    <!-- DATATABLE -->
+
+    <link rel="stylesheet" href="/static/css/sidebar.css" />
+    <link rel="stylesheet" href="../static/css/styles.css" />
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="row d-flex justify-content-between align-items-center header">
+        <div class="col">
+            <img src="/static/images/logo.png" class="logo w-25" alt="" />
+        </div>
+        <div class="col hello-sign">
+            <h1 class="admin-name">Hi, {{name}}!</h1>
+        </div>
+    </div>
+    <!-- HEADER -->
+
+    
+    <div id="wrapper" class="wrapper-content all-content">
+        <!-- NAVBAR -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-menu">
+                    <a href="/" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-chart-line fa-lg"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span class="menu-color">Dashboard</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/report" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                        <i class="fa-regular fa-file-lines fa-xl"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span class="menu-color">Report</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/devotion" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                        <i class="fa-solid fa-book-bible fa-lg"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span class="menu-color">Devotion</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/member" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-user fa-lg"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span class="menu-color">Member</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu active-menu">
+                    <a href="/group" style=" display: flex; align-items: center; color: #800507 !important;">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span>Group</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/church" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-church"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span class="menu-color">Church</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/admin" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-lock fa-lg"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span class="menu-color">Admin</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="sidebar-menu">
+                    <a href="/logout" style="display: flex; align-items: center">
+                        <div class="col-2 d-flex justify-content-start">
+                            <i class="fa-solid fa-right-from-bracket fa-lg"></i>
+                        </div>
+                        <div class="col-10 d-flex justify-content-start" style="text-indent: 5 !important">
+                            <span class="menu-color">Logout</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- NAVBAR -->
+
+        <div id="page-content-wrapper" class="bg-content">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button class="btn-menu btn btn-toggle-menu btn-sidebar" type="button">
+                            <div class="row">
+                                <div class="col-2">
+                                    <i class="fa-solid fa-bars"></i>
+                                </div>
+                                <div class="col-10">
+                                    <div class="nav-header">Home / Group</div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="title-page">Group Managements</h1>
+                        <!-- ADD DATA -->
+                        <div class="bg-table">
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-calvin" data-bs-toggle="modal" data-bs-target="#addNewData">
+                                    Add Group
+                                </button>
+                                <div class="modal fade pop-up" id="addNewData" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                    New Group
+                                                </h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <!-- <form action="/add-data-group" method="POST"> -->
+                                                <div class="modal-body">
+                                                    <div class="mb-3">
+                                                        <label for="group_name" class="form-label">Group Name</label>
+                                                        <input required type="text" class="form-control" id="group_name" name="group_name"/>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="church" class="form-label">Church</label>
+                                                        <select required name="id_church" id="id_church" class="form-select"></select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="church" class="form-label">Start Date</label>
+                                                        <input required type="date" class="form-control" name="start_date" id="start_date"/>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="church" class="form-label">Chapter(s) per Day</label>
+                                                        <select required class="form-select" id="num_of_chapter" name="num_of_chapter" aria-label="Default select example">
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="status" class="form-label">Status</label>
+                                                        <select required class="form-select" id="status" name="status" aria-label="Default select example">
+                                                            <option value="0">Inactive</option>
+                                                            <option value="1">Active</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-sec" data-bs-dismiss="modal">
+                                                        Close
+                                                    </button>
+                                                    <button type="submit" class="btn btn-main" id="addBtn">
+                                                        Add New Group
+                                                    </button>
+                                                </div>
+                                            <!-- </form> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ADD DATA -->
+                                <!-- EDIT DATA -->
+                                <div class="modal fade pop-up" id="editData" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                    Edit Group Details
+                                                </h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <!-- <form action="/update-data-group" method="POST"> -->
+                                                <div class="modal-body">
+                                                    <div class="mb-3">
+                                                        <input type="hidden" class="form-control" id="id_group_edit" name="id_group_edit"/>
+                                                        <label for="group_name" class="form-label">Group Name</label>
+                                                        <input required type="text" class="form-control" id="group_name_edit" name="group_name_edit"/>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="church" class="form-label">Church</label>
+                                                        <select required name="id_church_edit" id="id_church_edit" class="form-select"></select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="church" class="form-label">Start Date</label>
+                                                        <input disabled required type="date" class="form-control" name="start_date_edit" id="start_date_edit"/>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="church" class="form-label">Target Date</label>
+                                                        <input disabled required type="date" class="form-control" name="target_date_edit" id="target_date_edit"/>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="church" class="form-label">Chapter(s) per Day</label>
+                                                        <select disabled required class="form-select" id="num_of_chapter_edit" name="num_of_chapter_edit" aria-label="Default select example">
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="status" class="form-label">Status</label>
+                                                        <select required class="form-select" id="status_edit" name="status_edit" aria-label="Default select example">
+                                                            <option value="0">Inactive</option>
+                                                            <option value="1">Active</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-sec" data-bs-dismiss="modal">
+                                                        Close
+                                                    </button>
+                                                    <button type="submit" class="btn btn-main" id="editBtn">
+                                                        Edit Group
+                                                    </button>
+                                                </div>
+                                            <!-- </form> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <!-- EDIT DATA -->
+
+                            <!-- TABLE -->
+                            <table id="tbl-group" class="mt-3 table">
+                                <thead class="tbl-header">
+                                    <tr>
+                                        <td>GROUP NAME</td>
+                                        <td>CHURCH NAME</td>
+                                        <td>START DATE</td>
+                                        <td>TARGET DATE</td>
+                                        <td>CHAPTER PER DAY</td>
+                                        <td>STATUS</td>
+                                        <td>ACTION</td>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbl-body"></tbody>
+                            </table>
+                            <!-- TABLE -->
+                        </div>        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $(".btn-toggle-menu").click(function () {
+                $("#wrapper").toggleClass("toggled");
+            });
+        });
+
+        const TABLE = $("#tbl-group").DataTable({
+            language: {
+                search: "",
+                searchPlaceholder: "Search",
+            },
+        });
+
+        var DATA;
+
+        function loadData() {
+            TABLE.clear().draw();
+            document.getElementById('group_name').value = ''
+            document.getElementById('start_date').value = ''
+            document.getElementById('num_of_chapter').value = 1
+            document.getElementById('status').value = 1
+            $.ajax({
+                url: "/load-data-group",
+                method: "GET",
+                success: function (response) {
+                    if (response.status) {
+                        var data = [];
+                        DATA = response.data;
+                        response.data.forEach(function (element, index) {
+                            let row = [];
+                            if (element.group_name != 'anonymous') {
+                                row.push(element.group_name);
+                                row.push(element.church_name);
+                                row.push(element.start_date);
+                                row.push(element.target_date);
+                                row.push(element.num_of_chapter);
+                                if (element.status == 0) {
+                                    row.push("Inactive");
+                                } else {
+                                    row.push("Active");
+                                }
+                                if (element.id_group == 1) {
+                                    row.push(
+                                    `<button class="btn btn-disabled btn-update" type="button" class="btn btn-primary"><i class="fa-solid fa-pen" style="color: #144FC0;"></i></button>
+                                    <button class="btn btn-del btn-disabled" onclick="deleteData(${element.id_group})"><i class="fa-solid fa-trash" style="color: #e32221;"></i></button>`
+                                    );
+                                } else {
+                                    row.push(
+                                    `<button class="btn btn-update" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editData" onclick="setDetails(${index})"><i class="fa-solid fa-pen" style="color: #144FC0;"></i></button>
+                                    <button class="btn btn-del" onclick="deleteData(${element.id_group})"><i class="fa-solid fa-trash" style="color: #e32221;"></i></button>`
+                                    );
+                                }
+                                data.push(row);
+                            }
+                        });
+                        TABLE.rows.add(data).draw();
+                        loadChurch();
+                    } else {
+                        Swal.fire({
+                            title: "Oops!!!",
+                            text: response.msg,
+                            icon: "error",
+                        });
+                    }
+                },
+            });
+        }
+        $('#addBtn').click(function () {
+            let valueGroupName = document.getElementById('group_name').value
+            let valueIdChurch = document.getElementById('id_church').value
+            let valueStartDate = document.getElementById('start_date').value
+            let valueChapter = document.getElementById('num_of_chapter').value
+            let valueStatus = document.getElementById('status').value
+            if (valueGroupName && valueIdChurch && valueStartDate && valueChapter && valueStatus) {
+                let params = {
+                    group_name: valueGroupName,
+                    id_church: valueIdChurch,
+                    start_date: valueStartDate,
+                    num_of_chapter: valueChapter,
+                    status: valueStatus
+                };
+                $.ajax({
+                    type: 'POST',
+                    url: "/add-data-group",
+                    data: JSON.stringify(params),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        $('#addNewData').modal('hide');
+                        
+                        if (response.status) {
+                            Swal.fire({
+                                title: "Congrats!",
+                                text: "Data has been added successfully",
+                                icon: "success",
+                                timer: 1500,
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Oops!",
+                                text: response.msg,
+                                icon: "error",
+                                timer: 1500,
+                            });
+                        }
+                        
+                        loadData();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                })
+            }
+        })
+        $('#editBtn').click(function () {
+            let valueIdGroupEdit = document.getElementById('id_group_edit').value
+            let valueGroupNameEdit = document.getElementById('group_name_edit').value
+            let valueIdChurchEdit = document.getElementById('id_church_edit').value
+            let valueStatusEdit = document.getElementById('status_edit').value
+            if (valueIdGroupEdit && valueGroupNameEdit && valueIdChurchEdit && valueStatusEdit) {
+                let params = {
+                    id_group_edit: valueIdGroupEdit,
+                    group_name_edit: valueGroupNameEdit,
+                    id_church_edit: valueIdChurchEdit,
+                    status_edit: valueStatusEdit
+                };
+                $.ajax({
+                    type: 'POST',
+                    url: "/update-data-group",
+                    data: JSON.stringify(params),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        $('#editData').modal('hide');
+                        if (response.status) {
+                            Swal.fire({
+                                title: "Congrats!",
+                                text: "Data has been edited successfully",
+                                icon: "success",
+                                timer: 1500,
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Oops!",
+                                text: response.msg,
+                                icon: "error",
+                                timer: 1500,
+                            });
+                        }
+                        loadData();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                })
+            }
+        })
+        function deleteData(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: `/delete-data-group?id_group=${id}`,
+                        method: "GET",
+                        success: function (response) {
+                            if (response.status) {
+                                toastr["success"]("Success delete data");
+                                loadData();
+                            } else {
+                                Swal.fire({
+                                    title: "Oops!!!",
+                                    text: response.msg,
+                                    icon: "error",
+                                });
+                            }
+                        },
+                    });
+                }
+            });
+        }
+        function loadChurch() {
+            $.ajax({
+                url: `/load-data-church`,
+                method: "GET",
+                success: function (response) {
+                    if (response.status) {
+                        $("#id_church").empty();
+                        $("#id_church_edit").empty();
+                        var data = [];
+                        response.data.forEach(function (element, index) {
+                            if (element.church_name != "anonymous") {
+                                let option = document.createElement("option");
+                                option.text = element.church_name;
+                                option.value = element.id_church;
+                                $("#id_church").append(option);
+                                let option2 = document.createElement("option");
+                                option2.text = element.church_name;
+                                option2.value = element.id_church;
+                                $("#id_church_edit").append(option2);
+                            } 
+                        });
+                    }
+                },
+            });
+        }
+        function setDetails(index) {
+            var data = DATA[index];
+            $("#id_group_edit").val(data.id_group);
+            $("#group_name_edit").val(data.group_name);
+            $("#id_church_edit").val(data.id_church);
+            $("#start_date_edit").val(data.start_date);
+            $("#target_date_edit").val(data.target_date);
+            $("#num_of_chapter_edit").val(data.num_of_chapter);
+            $("#status_edit").val(data.status);
+        }
+        window.onload = loadData;
+    </script>
+</body>
+</html>
