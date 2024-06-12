@@ -179,7 +179,8 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="content" class="form-label" >Content</label>
-                                                        <input required type="text" class="form-control" id="content" name="content"/>
+                                                        <textarea required name="content" id="content" class="form-control devotion-content"></textarea>
+                                                        <!-- <input required type="textarea" class="form-control" id="content" name="content"/> -->
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="chapters" class="form-label">Chapters</label>
@@ -224,7 +225,8 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="content" class="form-label">Content</label>
-                                                        <input required type="text" class="form-control" id="content_edit" name="content_edit"/>
+                                                        <textarea required name="content_edit" id="content_edit" class="form-control devotion-content"></textarea>
+                                                        <!-- <input required type="textarea" class="form-control" id="content_edit" name="content_edit"/> -->
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="chapters" class="form-label" >Chapters</label>
@@ -275,6 +277,7 @@
                 search: "",
                 searchPlaceholder: "Search",
             },
+            scrollX: $(window).width() < 600
         });
 
         var DATA;
@@ -292,10 +295,10 @@
                         response.data.forEach(function (element, index) {
                             let row = [];
                             row.push(element.title);
-                            row.push(element.content);
+                            row.push(truncateString(element.content, 125));
                             row.push(element.chapter_name);
                             row.push(
-                                `<button class="btn btn-copy" type="button" class="btn btn-primary" onclick=""><i class="fa-solid fa-copy" style="color: #bc8d00;"></i></button>
+                                `<button class="btn btn-copy" type="button" class="btn btn-primary" onclick="copyDevotion(${element.id_devotion})"><i class="fa-solid fa-copy" style="color: #bc8d00;"></i></button>
                                 <button class="btn btn-update" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editData" onclick="setDetails(${index})"><i class="fa-solid fa-pen" style="color: #144FC0;"></i></button>
                                 <button class="btn btn-del" onclick="deleteData(${element.id_devotion})"><i class="fa-solid fa-trash" style="color: #E32221;"></i></button>`
                             );
@@ -312,6 +315,12 @@
                     }
                 },
             });
+        }
+        function truncateString(str, maxLength) {
+            if (str.length > maxLength) {
+                return str.slice(0, maxLength - 3) + '...';
+            }
+            return str;
         }
         function loadMasterChapter() {
             $.ajax({
@@ -437,13 +446,32 @@
                 }
             });
         }
-        function copyDevotion(index){
+        // document.getElementById("copy-button").addEventListener("click", function() {
+        //     var textarea = document.getElementById("recap-text-area");
+        //     textarea.select();
+        //     document.execCommand("copy");
+        //     Swal.fire({
+        //         icon: 'success',
+        //         title: 'Copied!',
+        //         text: 'Text copied to clipboard.',
+        //         timer: 1500 // Automatically close after 2 seconds
+        //     });
+        // });
+        function copyDevotion(id){
+            console.log(id);
             $.ajax({
                 url: `/copy-data-devotion?id_devotion=${id}`,
                 method: "GET",
                 success: function (response) {
                     if (response.status) {
-                        
+                        console.log(response.data);
+                        copyToClipboard(response.data);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Copied!',
+                            text: 'Text copied to clipboard.',
+                            timer: 1500 // Automatically close after 2 seconds
+                        });
                     } else {
                         Swal.fire({
                         title: "Oops!!!",
@@ -453,6 +481,13 @@
                     }
                 },
             });
+        }
+        function copyToClipboard(text) {
+            var $temp = $("<textarea>");
+            $("body").append($temp);
+            $temp.val(text).select();
+            document.execCommand("copy");
+            $temp.remove();
         }
         function setDetails(index) {
             var data = DATA[index];

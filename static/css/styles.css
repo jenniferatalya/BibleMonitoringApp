@@ -72,18 +72,19 @@
   padding-bottom: 10px;
   position: fixed;
   z-index: 2000;
-  height: 75px;
+  height: 100px;
 }
 
 .logo {
   padding-left: 1.2vw;
   padding-top: 1%;
+  padding-bottom: 1%;
   /* height: 50%; */
   width: auto;
 }
 
 .all-content {
-  padding-top: 75px;
+  padding-top: 100px;
 }
 
 .admin-name {
@@ -481,4 +482,60 @@ code {
 
 .margin-box{
   margin-bottom: 10px;
+}
+
+.bottom-col {
+  height: 600px;
+  justify-content: center;
+  align-items: center;
+}
+
+.devotion-content{
+  height: 200px;
+}
+
+@media (max-width: 600px) {
+  .title-page {
+    font-size: 30px;
+  }
+  .logo {
+    width: 60% !important;
+  }
+  .graph-title {
+    font-size: 8px;
+  }
+
+  .graph-btn {
+    height: 50px;
+  }
+
+  .late-member-list {
+    height: 700px;
+  }
+
+  .segmentation {
+    height: 450px;
+  }
+
+  .auto-recap-book-btn {
+     width: 200px;
+  }
+
+  .auto-recap-number-btn {
+    width: 150px;
+  }
+
+  .auto-recap-emoji-btn {
+    margin-top: 20px;
+    width: 150px;
+  }
+
+  .auto-recap-generate-btn {
+    margin-top: 20px;
+    width: 200px;
+  }
+
+  .card-text {
+    font-size: 15px !important;
+  }
 }

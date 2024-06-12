@@ -12,7 +12,9 @@ from schedule import Schedule
 from parsing import Parser
 from utils import BOOKNAMES_FIX_TYPO
 from datetime import datetime
+import matplotlib.dates as mdates
 import pandas as pd
+import numpy as np
 import hashlib
 import joblib
 import base64
@@ -26,7 +28,30 @@ def get_weekly_data(*args, **kwargs):
     id_group = request.args.get('id_group', None)
     report = Report()
     result_graph = report.get_data_graph1(id_group).get('data')
-    response = {'status': True, 'msg': 'Success', 'data': result_graph}
+
+    # dates = []
+    # values = []
+
+    # for data in result_graph:
+    #     dates.append(data.get('report_date'))
+    #     values.append(data.get('num_members'))
+
+    # # Convert dates to datetime objects and then to ordinal format
+    # date_objects = [datetime.strptime(date, "%Y-%m-%d") for date in dates]
+    # date_ordinal = [mdates.date2num(date) for date in date_objects]
+
+    # # Fit a linear trendline
+    # coefficients = np.polyfit(date_ordinal, values, 1)
+    # trendline = np.poly1d(coefficients)
+
+    # # Generate trendline values at each date point
+    # trendline_values = list(trendline(date_ordinal))
+
+    response = {'status': True, 
+                'msg': 'Success', 
+                'data': result_graph, 
+                # 'trendline_values': trendline_values
+                }
 
     return response
 
@@ -36,7 +61,30 @@ def get_monthly_data(*args, **kwargs):
     id_group = request.args.get('id_group', None)
     report = Report()
     result_graph = report.get_data_monthly(id_group).get('data')
-    response = {'status': True, 'msg': 'Success', 'data': result_graph}
+
+    # dates = []
+    # values = []
+
+    # for data in result_graph:
+    #     dates.append(data.get('report_date'))
+    #     values.append(data.get('num_members'))
+
+    # # Convert dates to datetime objects and then to ordinal format
+    # date_objects = [datetime.strptime(date, "%Y-%m-%d") for date in dates]
+    # date_ordinal = [mdates.date2num(date) for date in date_objects]
+
+    # # Fit a linear trendline
+    # coefficients = np.polyfit(date_ordinal, values, 1)
+    # trendline = np.poly1d(coefficients)
+
+    # # Generate trendline values at each date point
+    # trendline_values = list(trendline(date_ordinal))
+
+    response = {'status': True, 
+                'msg': 'Success', 
+                'data': result_graph, 
+                # 'trendline_values': trendline_values
+                }
     
     return response
 
@@ -46,7 +94,30 @@ def get_lifetime_data(*args, **kwargs):
     id_group = request.args.get('id_group', None)
     report = Report()
     result_graph = report.get_data_lifetime(id_group).get('data')
-    response = {'status': True, 'msg': 'Success', 'data': result_graph}
+
+    # dates = []
+    # values = []
+
+    # for data in result_graph:
+    #     dates.append(data.get('report_date'))
+    #     values.append(data.get('num_members'))
+
+    # # Convert dates to datetime objects and then to ordinal format
+    # date_objects = [datetime.strptime(date, "%Y-%m-%d") for date in dates]
+    # date_ordinal = [mdates.date2num(date) for date in date_objects]
+
+    # # Fit a linear trendline
+    # coefficients = np.polyfit(date_ordinal, values, 1)
+    # trendline = np.poly1d(coefficients)
+
+    # # Generate trendline values at each date point
+    # trendline_values = list(trendline(date_ordinal))
+
+    response = {'status': True, 
+                'msg': 'Success', 
+                'data': result_graph, 
+                # 'trendline_values': trendline_values
+                }
     
     return response
 
@@ -72,6 +143,23 @@ def get_graphs_data(*args, **kwargs):
 
     ## LINE-GRAPH: NUMBER OF MEMBERS IN A CERTAIN GROUP WHO HAS REPORTESD IN THE LAST 7 DAYS ##
     result_graph = report.get_data_graph1(id_group).get('data')
+    # dates = []
+    # values = []
+
+    # for data in result_graph:
+    #     dates.append(data.get('report_date'))
+    #     values.append(data.get('num_members'))
+
+    # # Convert dates to datetime objects and then to ordinal format
+    # date_objects = [datetime.strptime(date, "%Y-%m-%d") for date in dates]
+    # date_ordinal = [mdates.date2num(date) for date in date_objects]
+
+    # # Fit a linear trendline
+    # coefficients = np.polyfit(date_ordinal, values, 1)
+    # trendline = np.poly1d(coefficients)
+
+    # # Generate trendline values at each date point
+    # trendline_values = list(trendline(date_ordinal))
     ## LINE-GRAPH: NUMBER OF MEMBERS IN A CERTAIN GROUP WHO HAS REPORTESD IN THE LAST 7 DAYS ##
 
     ## MEMBER SEGMENTATION ##
@@ -92,6 +180,7 @@ def get_graphs_data(*args, **kwargs):
                     'graph': result_graph, 
                     'segmentation': result_segmentation,
                     'list_of_members': result_member_list,
+                    # 'trendline_values': trendline_values
                     }
                 }
     return response
@@ -121,14 +210,15 @@ def auto_recap(*args, **kwargs):
     all_members = member.get_members_by_group(id_group)
     formatted_report = []
     formatted_report.append(f"*Update {group_name}*")
-    formatted_report.append(f"{book_name} {number}")
+    formatted_report.append(f"{book_name.title()} {number}")
+    formatted_report.append("")
     for index, temp_member in enumerate(all_members['data'], start=1):
         member_report = report.get_member_last_chapter(temp_member['id_member'], date).get('data')
         if member_report:
             if int(member_report['id_chapter']) == int(id_chapter):
                 formatted_report.append(f"{index}. {temp_member['member_name']}: {emoji.emojize(str(emoji_opt))}")
             else:
-                formatted_report.append(f"{index}. {temp_member['member_name']}: {member_report['chapter_name']}")
+                formatted_report.append(f"{index}. {temp_member['member_name']}: {member_report['chapter_name'].title()}")
         else:
             formatted_report.append(f"{index}. {temp_member['member_name']}")
 
@@ -409,9 +499,7 @@ def update_data_devotion(*args, **kwargs):
 def delete_data_devotion(*args, **kwargs):
     id_devotion = request.args.get('id_devotion')
     devotion = Devotion()
-
-    devotion_data = devotion.get_devotion_by_id(id_devotion).get('data')[0]
-    response = f"{devotion_data['title']}\n{devotion_data['chapter_name']}\n\n{devotion_data['content']}"
+    response = devotion.delete(id_devotion)
 
     return response
 
@@ -420,7 +508,15 @@ def delete_data_devotion(*args, **kwargs):
 def copy_data_devotion(*args, **kwargs):
     id_devotion = request.args.get('id_devotion')
     devotion = Devotion()
-    response = devotion.delete(id_devotion)
+    response_data = []
+
+    devotion_data = devotion.get_devotion_by_id(id_devotion).get('data')[0]
+    response_data = f"{devotion_data['title']}\n{devotion_data['chapter_name'].title()}\n\n{devotion_data['content']}"
+    # response_data.append(devotion_data['title'])
+    # response_data.append(devotion_data['chapter_name'])
+    # response_data.append('')
+    # response_data.append(devotion_data['content'])
+    response = {'status': True, 'data': response_data}
     return response
 
 # GROUP

@@ -291,7 +291,7 @@ class Report:
                             COUNT(DISTINCT rt.id_member) as number_of_member
                         FROM report_table rt 
                         JOIN member_table m ON rt.id_member = m.id_member
-                        WHERE rt.date BETWEEN CURDATE() - INTERVAL 29 DAY AND CURDATE() AND m.id_group = :id_group
+                        WHERE rt.date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE() AND m.id_group = :id_group
                         GROUP BY rt.date
                         ORDER BY rt.date;
             """)
@@ -329,7 +329,7 @@ class Report:
                             COUNT(DISTINCT rt.id_member) as number_of_member
                         FROM report_table rt 
                         JOIN member_table m ON rt.id_member = m.id_member
-                        WHERE m.id_group = :id_group
+                        WHERE rt.date BETWEEN CURDATE() - INTERVAL 60 DAY AND CURDATE() AND m.id_group = :id_group
                         GROUP BY rt.date
                         ORDER BY rt.date;
             """)
@@ -397,23 +397,18 @@ class Report:
         response = {'status': False, 'msg': 'Database error'}
         try:
             query = text("""
-                        SELECT 
-                            m.member_name, 
-                            c.chapter_name, 
-                            m.phone
-                        FROM member_table m
-                        JOIN group_table g ON m.id_group = g.id_group
-                        LEFT JOIN (
-                            SELECT id_member, MAX(date) AS last_report_date, id_chapter
-                            FROM report_details_table rdt
-                            JOIN report_table rt ON rdt.id_report = rt.id_report
-                            GROUP BY id_member
-                        ) last_report ON m.id_member = last_report.id_member
-                        LEFT JOIN chapter_table c ON last_report.id_chapter = c.id_chapter
-                        WHERE g.id_group = :id_group
-                        AND (last_report.last_report_date IS NULL OR last_report.last_report_date < DATE_SUB(NOW(), INTERVAL 7 DAY))
-                        AND m.status = 1
-                        ORDER BY c.id_chapter DESC;
+                        SELECT m.member_name, c.chapter_name AS last_read_chapter 
+                        FROM member_table m 
+                        JOIN ( 
+                            SELECT r.id_member, MAX(r.date) AS last_report_date, MAX(rd.id_chapter) AS last_read_chapter_id 
+                            FROM report_table r 
+                            JOIN report_details_table rd ON r.id_report = rd.id_report 
+                            GROUP BY r.id_member 
+                            HAVING last_report_date <= CURDATE() - INTERVAL 7 DAY
+                        ) last_read ON m.id_member = last_read.id_member 
+                        JOIN chapter_table c ON last_read.last_read_chapter_id = c.id_chapter
+                        WHERE m.id_group=:id_group
+                        ORDER BY last_read.last_read_chapter_id;
                         """)
             params = {'id_group': id_group}
             data = connection.execute(query, params)
@@ -425,7 +420,6 @@ class Report:
                     returnData.append({
                         'member_name': row[0],
                         'chapter_name': row[1],
-                        'phone': row[2],
                     })
             response = {'status': True, 'msg': 'Success', 'data': returnData}
         except Exception as e:
@@ -477,13 +471,30 @@ class Report:
             returnData = {}
 
             query_ontime = text("""
-                                SELECT COUNT(DISTINCT r.id_member)
-                                FROM report_table r 
-                                JOIN report_details_table rd ON r.id_report = rd.id_report
-                                JOIN schedule_details_table sd ON rd.id_chapter = sd.id_chapter 
-                                JOIN schedule_table s ON sd.id_schedule = s.id_schedule 
-                                WHERE s.id_group = :id_group 
-                                AND s.date >= CURDATE();
+                                WITH LatestReport AS (
+                                    SELECT id_member, MAX(date) AS latest_date
+                                    FROM report_table
+                                    GROUP BY id_member
+                                ),
+                                MemberLatestReport AS (
+                                    SELECT r.id_report, r.id_member, r.date
+                                    FROM report_table r
+                                    JOIN LatestReport lr ON r.id_member = lr.id_member AND r.date = lr.latest_date
+                                ),
+                                MaxChapterPerMember AS (
+                                    SELECT mlr.id_member, MAX(rd.id_chapter) AS latest_id_chapter
+                                    FROM MemberLatestReport mlr
+                                    JOIN report_details_table rd ON mlr.id_report = rd.id_report
+                                    GROUP BY mlr.id_member
+                                )
+                                SELECT COUNT(m.member_name)
+                                FROM MaxChapterPerMember mcpm
+                                JOIN member_table m ON mcpm.id_member = m.id_member
+                                JOIN schedule_details_table sd ON mcpm.latest_id_chapter = sd.id_chapter
+                                JOIN schedule_table s ON sd.id_schedule = s.id_schedule
+                                WHERE s.date >= CURDATE() - INTERVAL 1 DAY
+                                AND s.id_group=:id_group
+                                AND m.id_group=:id_group;
                                 """)
             
             data_ontime = connection.execute(query_ontime, params)
@@ -492,14 +503,31 @@ class Report:
                 returnData['ontime'] = row[0]
 
             query_7dayslate = text("""
-                                SELECT COUNT(DISTINCT r.id_member)
-                                FROM report_table r 
-                                JOIN report_details_table rd ON r.id_report = rd.id_report
-                                JOIN schedule_details_table sd ON rd.id_chapter = sd.id_chapter 
-                                JOIN schedule_table s ON sd.id_schedule = s.id_schedule 
-                                WHERE s.id_group = :id_group 
-                                AND s.date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)  
-                                AND s.date <= DATE_SUB(CURDATE(), INTERVAL 1 DAY);
+                                WITH LatestReport AS (
+                                    SELECT id_member, MAX(date) AS latest_date
+                                    FROM report_table
+                                    GROUP BY id_member
+                                ),
+                                MemberLatestReport AS (
+                                    SELECT r.id_report, r.id_member, r.date
+                                    FROM report_table r
+                                    JOIN LatestReport lr ON r.id_member = lr.id_member AND r.date = lr.latest_date
+                                ),
+                                MaxChapterPerMember AS (
+                                    SELECT mlr.id_member, MAX(rd.id_chapter) AS latest_id_chapter
+                                    FROM MemberLatestReport mlr
+                                    JOIN report_details_table rd ON mlr.id_report = rd.id_report
+                                    GROUP BY mlr.id_member
+                                )
+                                SELECT COUNT(m.member_name)
+                                FROM MaxChapterPerMember mcpm
+                                JOIN member_table m ON mcpm.id_member = m.id_member
+                                JOIN schedule_details_table sd ON mcpm.latest_id_chapter = sd.id_chapter
+                                JOIN schedule_table s ON sd.id_schedule = s.id_schedule
+                                WHERE s.date < CURDATE() - INTERVAL 1 DAY
+                                AND s.date >= CURDATE() - INTERVAL 7 DAY
+                                AND s.id_group=:id_group
+                                AND m.id_group=:id_group;
                                 """)
             data_7dayslate = connection.execute(query_7dayslate, params)
 
@@ -507,14 +535,31 @@ class Report:
                 returnData['7_days'] = row[0]
 
             query_1monthlate = text("""
-                                SELECT COUNT(DISTINCT r.id_member)
-                                FROM report_table r 
-                                JOIN report_details_table rd ON r.id_report = rd.id_report
-                                JOIN schedule_details_table sd ON rd.id_chapter = sd.id_chapter 
-                                JOIN schedule_table s ON sd.id_schedule = s.id_schedule 
-                                WHERE s.id_group = :id_group 
-                                AND s.date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY) 
-                                AND s.date <= DATE_SUB(CURDATE(), INTERVAL 8 DAY);
+                                WITH LatestReport AS (
+                                    SELECT id_member, MAX(date) AS latest_date
+                                    FROM report_table
+                                    GROUP BY id_member
+                                ),
+                                MemberLatestReport AS (
+                                    SELECT r.id_report, r.id_member, r.date
+                                    FROM report_table r
+                                    JOIN LatestReport lr ON r.id_member = lr.id_member AND r.date = lr.latest_date
+                                ),
+                                MaxChapterPerMember AS (
+                                    SELECT mlr.id_member, MAX(rd.id_chapter) AS latest_id_chapter
+                                    FROM MemberLatestReport mlr
+                                    JOIN report_details_table rd ON mlr.id_report = rd.id_report
+                                    GROUP BY mlr.id_member
+                                )
+                                SELECT COUNT(m.member_name)
+                                FROM MaxChapterPerMember mcpm
+                                JOIN member_table m ON mcpm.id_member = m.id_member
+                                JOIN schedule_details_table sd ON mcpm.latest_id_chapter = sd.id_chapter
+                                JOIN schedule_table s ON sd.id_schedule = s.id_schedule
+                                WHERE s.date < CURDATE() - INTERVAL 7 DAY
+                                AND s.date >= CURDATE() - INTERVAL 30 DAY
+                                AND s.id_group=:id_group
+                                AND m.id_group=:id_group;
                                 """)
             data_1monthlate = connection.execute(query_1monthlate, params)
 
@@ -522,13 +567,30 @@ class Report:
                 returnData['1_month'] = row[0]
 
             query_more_than_1month = text("""
-                                        SELECT COUNT(DISTINCT r.id_member)
-                                        FROM report_table r 
-                                        JOIN report_details_table rd ON r.id_report = rd.id_report
-                                        JOIN schedule_details_table sd ON rd.id_chapter = sd.id_chapter 
-                                        JOIN schedule_table s ON sd.id_schedule = s.id_schedule 
-                                        WHERE s.id_group = :id_group
-                                        AND s.date <= DATE_SUB(CURDATE(), INTERVAL 31 DAY)
+                                        WITH LatestReport AS (
+                                            SELECT id_member, MAX(date) AS latest_date
+                                            FROM report_table
+                                            GROUP BY id_member
+                                        ),
+                                        MemberLatestReport AS (
+                                            SELECT r.id_report, r.id_member, r.date
+                                            FROM report_table r
+                                            JOIN LatestReport lr ON r.id_member = lr.id_member AND r.date = lr.latest_date
+                                        ),
+                                        MaxChapterPerMember AS (
+                                            SELECT mlr.id_member, MAX(rd.id_chapter) AS latest_id_chapter
+                                            FROM MemberLatestReport mlr
+                                            JOIN report_details_table rd ON mlr.id_report = rd.id_report
+                                            GROUP BY mlr.id_member
+                                        )
+                                        SELECT COUNT(m.member_name)
+                                        FROM MaxChapterPerMember mcpm
+                                        JOIN member_table m ON mcpm.id_member = m.id_member
+                                        JOIN schedule_details_table sd ON mcpm.latest_id_chapter = sd.id_chapter
+                                        JOIN schedule_table s ON sd.id_schedule = s.id_schedule
+                                        WHERE s.date < CURDATE() - INTERVAL 30 DAY
+                                        AND s.id_group=:id_group
+                                        AND m.id_group=:id_group;
                                         """)
             data_more_than_1month = connection.execute(query_more_than_1month, params)
 

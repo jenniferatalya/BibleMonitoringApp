@@ -235,29 +235,29 @@
                                 <div class="col graph-bg">
                                     <div class="row">
                                         <div class="col">
-                                            <p class="graph-title" style="margin:3px !important;">JUMLAH ANGGOTA MELAPOR DALAM SEMINGGU TERAKHIR</p>
+                                            <p class="graph-title" id="num_of_members_chart" style="margin:3px !important;">JUMLAH ANGGOTA MELAPOR DALAM SEMINGGU TERAKHIR</p>
                                         </div>
                                         <div class="col d-flex justify-content-end">
-                                            <button class="graph-btn" id="weekly-btn" style="background-color: #dbdbdb;" onclick="loadWeekly()">WEEK</button><button class="graph-btn" id="monthly-btn" style="background-color: #ececec;" onclick="loadMonthly()">MONTH</button><button class="graph-btn" id="lifetime-btn" style="background-color: #ececec;" onclick="loadLifetime()">ALL TIME</button>
+                                            <button class="graph-btn" id="weekly-btn" style="background-color: #dbdbdb;" onclick="loadWeekly()">WEEK</button><button class="graph-btn" id="monthly-btn" style="background-color: #ececec;" onclick="loadMonthly()">MONTH</button><button class="graph-btn" id="lifetime-btn" style="background-color: #ececec;" onclick="loadLifetime()">2 MONTHS</button>
                                         </div>
                                     </div>
-                                    <canvas id="line-graph"></canvas>
+                                    <canvas id="line-graph" class="line-graph"></canvas>
                                 </div>
                             </div>
             
                             <div class="row">
-                                <div class="col graph-bg">
-                                    <p class="graph-title">SEGMENTASI ANGGOTA BERDASARKAN LAPORAN</p>
+                                <div class="col graph-bg bottom-col segmentation">
+                                    <p class="graph-title" style="margin-left: 1.5px;">SEGMENTASI ANGGOTA BERDASARKAN LAPORAN</p>
+                                    <!-- <canvas id="piechart-members" style="margin-bottom: 100px; margin-left: 100px; padding-bottom: 50px;"></canvas> -->
                                     <canvas id="piechart-members"></canvas>
                                 </div>
-                                <div class="col graph-bg">
-                                    <p class="graph-title">ANGGOTA YANG SUDAH LEBIH DARI 7 HARI TIDAK MELAPOR</p>
+                                <div class="col graph-bg bottom-col late-member-list">
+                                    <p class="graph-title" style="margin-left: 1.5px;">ANGGOTA YANG SUDAH LEBIH DARI 7 HARI TIDAK MELAPOR</p>
                                     <table id="late-members-card" class="table tbl-dashboard">
                                         <thead>
                                             <tr>
                                             <td>Name</td>
                                             <td>Last Chapter Reported</td>
-                                            <td>Phone Number</td>
                                             </tr>
                                         </thead>
                                         <tbody id="list-members"></tbody>
@@ -284,9 +284,8 @@
             },
             'columns': [
                 {'width': '50%'},
-                null,
                 null
-            ]
+            ],
         });
 
         var CHART;
@@ -303,6 +302,7 @@
                     if (response.status) {
                         let headers = [];
                         let DATA = [];
+                        console.log(304, response.data)
 
                         // LINE-GRAPH: NUMBER OF MEMBERS IN A CERTAIN GROUP WHO HAS REPORTESD IN THE LAST 7 DAYS
                         response.data.graph.forEach(element => {
@@ -320,8 +320,16 @@
                                         label: 'Number of Member(s)',
                                         data: DATA,
                                         borderColor: '#80050770',
-                                        borderWidth: 3
-                                    }
+                                        borderWidth: 3,
+                                        pointRadius: 2
+                                    },
+                                    //{
+                                      //  label: 'Trend',
+                                        //data: response.data.trendline_values,
+                                        //borderColor: '#acacac',
+                                        //borderWidth: 3,
+                                        //pointRadius: 0
+                                    //}
                                 ]
                             },
                             options: {
@@ -329,20 +337,29 @@
                                     yAxes: [{
                                         ticks: {
                                             beginAtZero: true
+                                        },
+                                    }],
+                                    x:{
+                                        grid:{
+                                            display: false
                                         }
-                                    }]
+                                    },
                                 },
                                 height: 50
                             }
                         };
                         // LINE-GRAPH: NUMBER OF MEMBERS IN A CERTAIN GROUP WHO HAS REPORTESD IN THE LAST 7 DAYS
-
+                        console.log(338,response.data.today_schedule.length);
                         // TODAY'S SCHEDULE
-                        
-                        response.data.today_schedule.forEach(element => {
-                            document.getElementById("schedule-card-date").innerHTML = element.date;
-                            document.getElementById("schedule-card").innerHTML = element.readings;
-                        })
+                        if (response.data.today_schedule.length == 0){
+                            document.getElementById("schedule-card-date").innerHTML = 'no readings';
+                            document.getElementById("schedule-card").innerHTML = "Sunday";
+                        } else {
+                            response.data.today_schedule.forEach(element => {
+                                document.getElementById("schedule-card-date").innerHTML = element.date;
+                                document.getElementById("schedule-card").innerHTML = element.readings;
+                            })
+                        }
                         // TODAY'S SCHEDULE
 
                         // NUMBER OF MEMBERS
@@ -401,7 +418,6 @@
                             let row = [];
                             row.push(element.member_name);
                             row.push(element.chapter_name);
-                            row.push(element.phone);
                             data.push(row);
                         });
                         TABLE.rows.add(data).draw();
@@ -477,16 +493,32 @@
                                     label: 'Number of Member(s)',
                                     data: DATA,
                                     borderColor: '#80050770',
-                                    borderWidth: 3
-                                }
+                                    borderWidth: 3,
+                                    pointRadius: 2
+                                },
+                                // {
+                                //     label: 'Trend',
+                                //     data: response.data.trendline_values,
+                                //     borderColor: '#acacac',
+                                //     borderWidth: 3,
+                                //     pointRadius: 0
+                                // }
                                 ],
                                 options: {
                                 scales: {
                                     yAxes: [{
                                         ticks: {
                                             beginAtZero: true
+                                        },
+                                        gridLines: {
+                                            display: false
                                         }
-                                    }]
+                                    }],
+                                    x:{
+                                        grid:{
+                                            display: false
+                                        }
+                                    },
                                 },
                                 height: 50
                             }
@@ -499,10 +531,16 @@
                         document.getElementById("schedule-card-date").innerHTML = ``;
                         document.getElementById("schedule-card").innerHTML = ``;
 
-                        response.data.today_schedule.forEach(element => {
-                        document.getElementById("schedule-card-date").innerHTML = element.date;
-                        document.getElementById("schedule-card").innerHTML = element.readings;
-                        })
+                        if (response.data.today_schedule.length == 0){
+                            document.getElementById("schedule-card-date").innerHTML = 'no readings';
+                            document.getElementById("schedule-card").innerHTML = "Sunday";
+                        } else {
+                            response.data.today_schedule.forEach(element => {
+                                document.getElementById("schedule-card-date").innerHTML = element.date;
+                                document.getElementById("schedule-card").innerHTML = element.readings;
+                            })
+                        }
+
                         // TODAY'S SCHEDULE
 
                         // NUMBER OF MEMBERS
@@ -547,22 +585,12 @@
                         // MEMBERS SEGMENTATION
 
                         // LIST OF MEMBERS WHO HAS NOT REPORTED FOR MORE THAN 7 DAYS
-                        // document.getElementById('list-members').innerHTML = ``
-                        // response.data.list_of_members.forEach(element => {
-                        //     let code = `<tr>
-                        //                 <td>${element.member_name}</td>
-                        //                 <td>${element.chapter_name}</td>
-                        //                 <td>${element.phone}</td>
-                        //                 </tr>`
-                        //     document.getElementById('list-members').innerHTML += code
-                        // })
-
+                        
                         var data = []
                         response.data.list_of_members.forEach(function (element, index) {
                             let row = [];
                             row.push(element.member_name);
                             row.push(element.chapter_name);
-                            row.push(element.phone);
                             data.push(row);
                         });
                         TABLE.rows.add(data).draw();
@@ -635,8 +663,16 @@
                                 label: 'Number of Member(s)',
                                 data: DATA,
                                 borderColor: '#80050770',
-                                borderWidth: 3
-                            }
+                                borderWidth: 3,
+                                pointRadius: 2
+                            },
+                            // {
+                            //     label: 'Trend',
+                            //     data: response.trendline_values,
+                            //     borderColor: '#acacac',
+                            //     borderWidth: 3,
+                            //     pointRadius: 0
+                            // }
                             ],
                             options: {
                             scales: {
@@ -644,13 +680,21 @@
                                     ticks: {
                                         beginAtZero: true
                                     }
-                                }]
+                                }],
+                                x:{
+                                    grid:{
+                                        display: false
+                                    }
+                                },
                             },
                             height: 50
                         }
                     }
                     CHART.data = newData
                     CHART.update();
+
+                    document.getElementById("num_of_members_chart").innerHTML = ``;
+                    document.getElementById("num_of_members_chart").innerHTML = 'JUMLAH ANGGOTA MELAPOR DALAM SEMINGGU TERAKHIR';
 
                     document.getElementById("weekly-btn").style.background='#dbdbdb';
                     document.getElementById("monthly-btn").style.background='#ececec';
@@ -678,8 +722,16 @@
                                 label: 'Number of Member(s)',
                                 data: DATA,
                                 borderColor: '#80050770' ,
-                                borderWidth: 3
-                            }
+                                borderWidth: 3,
+                                pointRadius: 2
+                            },
+                            // {
+                            //     label: 'Trend',
+                            //     data: response.trendline_values,
+                            //     borderColor: '#acacac',
+                            //     borderWidth: 3,
+                            //     pointRadius: 0
+                            // }
                             ],
                             options: {
                             scales: {
@@ -687,13 +739,21 @@
                                     ticks: {
                                         beginAtZero: true
                                     }
-                                }]
+                                }],
+                                x:{
+                                    grid:{
+                                        display: false
+                                    }
+                                },
                             },
                             height: 50
                         }
                     }
                     CHART.data = newData
                     CHART.update();
+
+                    document.getElementById("num_of_members_chart").innerHTML = ``;
+                    document.getElementById("num_of_members_chart").innerHTML = 'JUMLAH ANGGOTA MELAPOR DALAM SEBULAN TERAKHIR';
                     
                     document.getElementById("weekly-btn").style.background='#ececec';
                     document.getElementById("monthly-btn").style.background='#dbdbdb';
@@ -721,8 +781,16 @@
                                 label: 'Number of Member(s)',
                                 data: DATA,
                                 borderColor: '#80050770',
-                                borderWidth: 3
-                            }
+                                borderWidth: 3,
+                                pointRadius: 2
+                            },
+                            // {
+                            //     label: 'Trend',
+                            //     data: response.trendline_values,
+                            //     borderColor: '#acacac',
+                            //     borderWidth: 3,
+                            //     pointRadius: 0
+                            // }
                             ],
                             options: {
                             scales: {
@@ -737,6 +805,9 @@
                     }
                     CHART.data = newData
                     CHART.update();
+
+                    document.getElementById("num_of_members_chart").innerHTML = ``;
+                    document.getElementById("num_of_members_chart").innerHTML = 'JUMLAH ANGGOTA MELAPOR DALAM DUA BULAN TERAKHIR';
                     
                     document.getElementById("weekly-btn").style.background='#ececec';
                     document.getElementById("monthly-btn").style.background='#ececec';

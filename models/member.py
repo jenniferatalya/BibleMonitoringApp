@@ -87,6 +87,34 @@ class Member:
             response['msg'] = f'Failed to update member'
         return response
     
+    def alter_fk(self):
+        response = {'status': False, 'msg': 'Database error'}
+        try:
+            
+            query = text("""
+                        ALTER TABLE report_details_table
+                            ADD CONSTRAINT fk_report_details_report
+                            FOREIGN KEY (id_report)
+                            REFERENCES report_table(id_report)
+                            ON DELETE CASCADE;
+                    """)
+            
+            connection.execute(query)
+            
+            query2 = text("""
+                        ALTER TABLE report_table
+                            ADD CONSTRAINT fk_report_member
+                            FOREIGN KEY (id_member)
+                            REFERENCES member_table(id_member)
+                            ON DELETE CASCADE; 
+                    """)
+            
+            connection.execute(query2)
+            response = {'status': True, 'msg': 'Success'}
+        except Exception as e:
+            response['msg'] = f'Cannot delete group!'
+        return response
+
     def delete(self, id_member):
         """ Delete a member from the database
 
@@ -101,6 +129,7 @@ class Member:
             if id_member == '1':
                 response = {'status': False,'msg': 'You cannot delete this member'}
             else:
+                self.alter_fk()
                 query = text("DELETE FROM member_table WHERE id_member = :id_member;")
                 
                 params = {"id_member": id_member}
