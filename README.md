@@ -1,7 +1,7 @@
 <h1 align="center"> Bible Reading Monitoring App </h1> <br>
 
 <p align="center">
-  <img src="https://github.com/jenniferatalya/BibleMonitoringApp/assets/96117065/99b14fc2-cd47-4841-82e3-64a06bf6acf5" width="700px">
+  <img src="https://github.com/jenniferatalya/BibleMonitoringApp/assets/96117065/99b14fc2-cd47-4841-82e3-64a06bf6acf5" width="700px"><br>
   <a href="http://bacaalkitab.web.id/" target="_blank"><img src="https://github.com/jenniferatalya/BibleMonitoringApp/assets/96117065/8f1fca74-9ebc-434d-95db-44a41a8f4d37" width="300px"></a>
 </p>
 
